@@ -1,0 +1,16 @@
+{
+    "name": "darkling/benchmark-php",
+    "description": "Comparison of data serialization formats in PHP",
+    "authors": [
+        {
+            "name": "Jan Vanura",
+            "email": "jano.vano@gmail.com"
+        }
+    ],
+    "require": {
+        "nette/robot-loader": "^v2.4",
+        "nette/utils": "^v2.4",
+        "symfony/console": "^3.1",
+        "justinrainbow/json-schema": "^4.0"
+    }
+}
