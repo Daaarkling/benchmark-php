@@ -24,30 +24,37 @@ class Benchmark
 	public function run()
 	{
 		$result = [];
+		$data = NULL;
 		$repetitions = $this->config['repetitions'];
 
 		foreach ($this->config['tests'] as $typeName => $type){
 
-			$converterName = $type['converter'];
-			if (!($dataConverter = $this->instantiateClass($converterName, IDataConverter::class))) {
-				continue;
+			if (key_exists('converter', $type) && $type['converter']) {
+				$converterName = $type['converter'];
+				if (!($dataConverter = ClassInstantiator::instantiateClass($converterName, IDataConverter::class))) {
+					continue;
+				}
+				$data = $dataConverter->convertData($this->testData);
 			}
-			$data = $dataConverter->convertData($this->testData);
 
 			foreach ($type['formats'] as $formatName => $format){
 				foreach ($format as $lib){
 
 					$className = $lib['class'];
-					if (!($class = $this->instantiateClass($className, IUnitBenchmarkTest::class))) {
+					if (!($class = ClassInstantiator::instantiateClass($className, IUnitBenchmarkTest::class))) {
 						continue;
 					}
 
 					if (key_exists('converter', $lib) && $lib['converter']) {
 						$converterName = $lib['converter'];
-						if (!($dataConverter = $this->instantiateClass($converterName, IDataConverter::class))) {
+						if (!($dataConverter = ClassInstantiator::instantiateClass($converterName, IDataConverter::class))) {
 							continue;
 						}
 						$data = $dataConverter->convertData($this->testData);
+					}
+
+					if (!$data) {
+						continue;
 					}
 
 					for ($i = 1; $i <= $repetitions; $i++) {
@@ -75,24 +82,6 @@ class Benchmark
 	{
 		var_dump($result);
 		exit;
-	}
-
-
-	/**
-	 * @param string $className
-	 * @param string $instanceof
-	 * @return IUnitBenchmarkTest|IDataConverter|NULL object
-	 */
-	protected function instantiateClass($className, $instanceof)
-	{
-		if (!class_exists($className)) {
-			return NULL;
-		}
-		$class = new $className();
-		if (!$class instanceof $instanceof) {
-			return NULL;
-		}
-		return $class;
 	}
 
 

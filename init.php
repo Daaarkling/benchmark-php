@@ -16,6 +16,7 @@ $loader->addDirectory('benchmark');
 $loader->setCacheStorage(new FileStorage('temp'));
 $loader->register();
 
+
 $app = new Application();
 $app->add(new RunCommand());
 $app->add(new ValidateCommand());

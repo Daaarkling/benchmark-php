@@ -1,0 +1,71 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Config",
+	"description": "Config file for benchmark",
+	"type": "object",
+	"properties": {
+		"repetitions": {
+			"description": "Number of repetitions",
+			"type": "number",
+			"minimum": 1
+		},
+		"outputToFile": {
+			"description": "Should output be written into file or not (print to screen).",
+			"type": "boolean"
+		},
+		"testData": {
+			"description": "Name of file with test data.",
+			"type": "string"
+		},
+		"tests": {
+			"type": "object",
+			"properties": {
+				"encoders": {
+					"type": "object",
+					"properties": {
+						"converter": {
+							"description": "Name of converter class.",
+							"type": "string"
+						},
+						"formats": {
+							"description": "Formats such as xml, json,...",
+							"type": "object",
+							"additionalProperties": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"name": {
+											"description": "Name of lib or function.",
+											"type": "string"
+										},
+										"class": {
+											"description": "Fully qualified name of class which implements IUnitBenchmarkTest interface.",
+											"type": "string"
+										},
+										"converter": {
+											"description": "Fully qualified name of converter class which implements IDataConverter interface.",
+											"type": "string"
+										},
+										"url": {
+											"description": "URL to lib or function web page.",
+											"type": "string"
+										},
+										"version": {
+											"description": "Version of lib or function.",
+											"type": "string"
+										}
+									},
+									"required": ["name", "class"]
+								}
+							}
+						}
+					},
+					"required": ["formats"]
+				}
+			},
+			"required": ["encoders", "decoders"]
+		}
+	},
+	"required": ["repetitions", "outputToFile", "testData", "tests"]
+}
