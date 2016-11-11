@@ -21,7 +21,7 @@ class Validator
 	/** @var array */
 	private $errors = [];
 
-	/** @var array */
+	/** @var object */
 	private $config;
 
 	/** @var  JValidator */
@@ -29,7 +29,7 @@ class Validator
 
 
 
-	public function __construct(array $config)
+	public function __construct($config)
 	{
 		$this->setConfig($config);
 		$this->schemaValidator = new JValidator();
@@ -59,7 +59,7 @@ class Validator
 	 */
 	public function validateConfig()
 	{
-		$schema = Json::decode(file_get_contents(__DIR__ . '/../config/' . self::$schema), Json::FORCE_ARRAY);
+		$schema = Json::decode(file_get_contents(__DIR__ . '/../config/' . self::$schema));
 
 		$this->schemaValidator->check($this->config, $schema);
 
@@ -74,21 +74,22 @@ class Validator
 	 */
 	public function validateClasses()
 	{
-		foreach ($this->config['tests'] as $type) {
-			if (key_exists('converter', $type)) {
-				if (!$this->isClassValid($type['converter'], IDataConverter::class)) {
-					$this->addClassError($type['converter']);
+		foreach ($this->config->tests as $type) {
+
+			if (property_exists($type, 'converter')) {
+				if (!$this->isClassValid($type->converter, IDataConverter::class)) {
+					$this->addClassError($type->converter);
 				}
 			}
-			foreach ($type['formats'] as $format) {
+			foreach ($type->formats as $format) {
 				foreach ($format as $lib) {
-					if (key_exists('converter', $lib)) {
-						if (!$this->isClassValid($lib['converter'], IDataConverter::class)) {
-							$this->addClassError($lib['converter']);
+					if (property_exists($lib, 'converter')) {
+						if (!$this->isClassValid($lib->converter, IDataConverter::class)) {
+							$this->addClassError($lib->converter);
 						}
 					}
-					if (!$this->isClassValid($lib['class'], IUnitBenchmarkTest::class)) {
-						$this->addClassError($lib['class']);
+					if (!$this->isClassValid($lib->class, IUnitBenchmarkTest::class)) {
+						$this->addClassError($lib->class);
 					}
 				}
 			}
@@ -123,13 +124,12 @@ class Validator
 	 */
 	public function validateTestData()
 	{
-		// TODO
-		$testDataFile = __DIR__ . '/../../config/config.json';
+		$testDataFile = __DIR__ . '/../config/' . $this->config->testData;
 		if (!file_exists($testDataFile)) {
 			$this->errors['testData'][] = [
-				'property' => 'testData',
-				'message' => 'Test data file was not found.'
-			];
+					'property' => 'testData',
+					'message' => 'Test data file was not found.'
+				];
 		}
 	}
 
@@ -161,7 +161,7 @@ class Validator
 
 
 	/**
-	 * @return array
+	 * @return object
 	 */
 	public function getConfig()
 	{
@@ -169,9 +169,9 @@ class Validator
 	}
 
 	/**
-	 * @param array $config
+	 * @param object $config
 	 */
-	public function setConfig(array $config)
+	public function setConfig($config)
 	{
 		$this->config = $config;
 		$this->errors = [];

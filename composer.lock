@@ -4,9 +4,45 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6be17e78d477077a209f5eb06e5a4d3c",
-    "content-hash": "a30d9afbb0f4f0870e6d922e899261ca",
+    "hash": "2ab8a9c45f8c8bb30814de1c8a8baf53",
+    "content-hash": "c06bfbe4a84cce7e236f2afff0a4ffcc",
     "packages": [
+        {
+            "name": "fillup/array2xml",
+            "version": "0.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fillup/array2xml.git",
+                "reference": "5ba10b911e62d65d43ef4d405bfcc6ff4ae46dbc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fillup/array2xml/zipball/5ba10b911e62d65d43ef4d405bfcc6ff4ae46dbc",
+                "reference": "5ba10b911e62d65d43ef4d405bfcc6ff4ae46dbc",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.24"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "fillup\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Phillip Shipley",
+                    "email": "phillip.shipley@gmail.com"
+                }
+            ],
+            "description": "Library for converting arrays to XML",
+            "time": "2016-10-14 15:38:30"
+        },
         {
             "name": "justinrainbow/json-schema",
             "version": "4.0.1",
@@ -314,6 +350,55 @@
             "time": "2016-09-28 17:57:14"
         },
         {
+            "name": "openlss/lib-array2xml",
+            "version": "0.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nullivex/lib-array2xml.git",
+                "reference": "9a033906d404f616895db9920403dfeec3fb9e00"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nullivex/lib-array2xml/zipball/9a033906d404f616895db9920403dfeec3fb9e00",
+                "reference": "9a033906d404f616895db9920403dfeec3fb9e00",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "LSS": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Bryan Tong",
+                    "email": "contact@nullivex.com",
+                    "homepage": "http://bryantong.com"
+                },
+                {
+                    "name": "Tony Butler",
+                    "email": "spudz76@gmail.com",
+                    "homepage": "http://openlss.org"
+                }
+            ],
+            "description": "Array2XML conversion library credit to lalit.org",
+            "homepage": "http://openlss.org",
+            "keywords": [
+                "array",
+                "array conversion",
+                "xml",
+                "xml conversion"
+            ],
+            "time": "2016-11-02 18:55:00"
+        },
+        {
             "name": "psr/log",
             "version": "1.0.2",
             "source": {
@@ -359,6 +444,55 @@
                 "psr-3"
             ],
             "time": "2016-10-10 12:19:37"
+        },
+        {
+            "name": "spatie/array-to-xml",
+            "version": "2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/array-to-xml.git",
+                "reference": "3222421c5fde8822e6746bcd6253df2c20e1d5bc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/array-to-xml/zipball/3222421c5fde8822e6746bcd6253df2c20e1d5bc",
+                "reference": "3222421c5fde8822e6746bcd6253df2c20e1d5bc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "4.*",
+                "scrutinizer/ocular": "~1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\ArrayToXml\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://murze.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Convert an array to xml",
+            "homepage": "https://github.com/spatie/array-to-xml",
+            "keywords": [
+                "array",
+                "convert",
+                "xml"
+            ],
+            "time": "2016-07-04 12:29:38"
         },
         {
             "name": "symfony/console",

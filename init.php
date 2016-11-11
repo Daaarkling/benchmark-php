@@ -3,8 +3,8 @@
 use Benchmark\Commands\RunCommand;
 use Benchmark\Commands\ValidateCommand;
 use Composer\Autoload\ClassLoader;
-use Nette\Loaders\RobotLoader;
 use Nette\Caching\Storages\FileStorage;
+use Nette\Loaders\RobotLoader;
 use Symfony\Component\Console\Application;
 
 
@@ -14,6 +14,7 @@ $composer = require __DIR__ . '/vendor/autoload.php';
 $loader = new RobotLoader;
 $loader->addDirectory('benchmark');
 $loader->setCacheStorage(new FileStorage('temp'));
+//$loader->setTempDirectory('temp');
 $loader->register();
 
 

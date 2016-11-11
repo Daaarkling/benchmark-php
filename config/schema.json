@@ -7,7 +7,7 @@
 		"repetitions": {
 			"description": "Number of repetitions",
 			"type": "number",
-			"minimum": 1
+			"minimum": 10
 		},
 		"outputToFile": {
 			"description": "Should output be written into file or not (print to screen).",
@@ -32,6 +32,7 @@
 							"type": "object",
 							"additionalProperties": {
 								"type": "array",
+								"minProperties": 1,
 								"items": {
 									"type": "object",
 									"properties": {
@@ -58,13 +59,14 @@
 									},
 									"required": ["name", "class"]
 								}
-							}
+							},
+							"minProperties": 1
 						}
 					},
 					"required": ["formats"]
 				}
 			},
-			"required": ["encoders", "decoders"]
+			"required": ["encoders"]
 		}
 	},
 	"required": ["repetitions", "outputToFile", "testData", "tests"]

@@ -32,25 +32,6 @@
                         "url": "https://github.com/fillup/array2xml",
                         "version": "0.5.1"
                     }
-                ],
-                "json": [
-                    {
-                        "name": "PHP native function json_encode",
-                        "class": "\\Benchmark\\Encoders\\Json\\NativeJsonEncodeFunction",
-                        "url": "http://php.net/manual/en/function.json-encode.php"
-                    }
-                ]
-            }
-        },
-        "decoders": {
-            "formats": {
-                "native": [
-                    {
-                        "name": "PHP native function unserialize",
-                        "class": "\\Benchmark\\Encoders\\Native\\PhpSerializeFunction",
-                        "converter": "\\Benchmark\\Decoders\\SerializeConverter",
-                        "url": "http://php.net/manual/en/function.unserialize.php"
-                    }
                 ]
             }
         }

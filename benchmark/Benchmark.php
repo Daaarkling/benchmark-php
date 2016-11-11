@@ -57,18 +57,21 @@ class Benchmark
 						continue;
 					}
 
+					$string = '';
+					$libName = key_exists('version', $lib) ? $lib['name'] . ' ' . $lib['version'] : $lib['name'];
 					for ($i = 1; $i <= $repetitions; $i++) {
 
 						$start = microtime(TRUE);
 						$string = $class->execute($data);
 						$time = microtime(TRUE) - $start;
 
-						$result[$typeName][$formatName][$lib['name']]['time'][] = $time;
+						$result[$typeName][$formatName][$libName]['time'][] = $time;
+					}
 
-						if ($string) {
-							$size = strlen($string);
-							$result[$typeName][$formatName][$lib['name']]['size'][] = $size;
-						}
+					// size of string is always same (at least it should be), there is no need to repeat the process
+					if ($string) {
+						$size = strlen($string);
+						$result[$typeName][$formatName][$libName]['size'] = $size;
 					}
 				}
 
