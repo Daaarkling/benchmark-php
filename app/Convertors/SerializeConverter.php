@@ -1,14 +1,8 @@
 <?php
-/**
- * @author      Jan Vaňura <jano.vano@gmail.com>
- * @package     Benchmark
- */
 
 
-namespace Benchmark\Decoders;
+namespace Darkling\Benchmark\Converters;
 
-
-use Benchmark\IDataConverter;
 use Nette\Utils\Json;
 
 class SerializeConverter implements IDataConverter

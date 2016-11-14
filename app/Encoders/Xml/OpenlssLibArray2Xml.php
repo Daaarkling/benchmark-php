@@ -1,13 +1,13 @@
 <?php
 
-namespace Benchmark\Encoders\Xml;
+namespace Darkling\Benchmark\Encoders\Xml;
 
 
-use Benchmark\IUnitBenchmarkTest;
+use Darkling\Benchmark\IUnitBenchmark;
 use LSS\Array2XML;
 
 
-class OpenlssLibArray2Xml implements IUnitBenchmarkTest
+class OpenlssLibArray2Xml implements IUnitBenchmark
 {
 
 

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Benchmark\Commands;
+namespace Darkling\Benchmark\Commands;
 
 
-use Benchmark\Validator;
+use Darkling\Benchmark\Utils\Validator;
 use Nette\Utils\Json;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,14 +14,20 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ValidateCommand extends Command
 {
+	const OUTPUT = ['file', 'csv', 'console', 'dump'];
+
+
+
 	protected function configure()
 	{
 		$this->setName('benchmark:validate')
 			->setDescription('Validate config file')
 			->setHelp('Validate config file against the schema. Check if test data file exists and also check given classes and converters if they exist and are instantiable.')
 			->addOption('config', 'c', InputOption::VALUE_REQUIRED, 'Set different config file (must by located in config folder).', 'config.json')
-			->addOption('data', 'd', InputOption::VALUE_REQUIRED, 'Set different test data (must by located in config folder).', 'testData.json');;
+			->addOption('data', 'd', InputOption::VALUE_REQUIRED, 'Set different test data (must by located in config folder).', 'testData.json');
 	}
+
+
 
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{

@@ -1,34 +1,33 @@
 {
     "repetitions": 10,
-    "outputToFile": true,
     "testData": "testdata.json",
     "tests": {
         "encoders": {
-            "converter": "\\Benchmark\\Encoders\\ArrayConverter",
+            "converter": "\\Darkling\\Benchmark\\Converters\\ArrayConverter",
             "formats": {
                 "native": [
                     {
                         "name": "PHP native function serialize",
-                        "class": "\\Benchmark\\Encoders\\Native\\PhpSerializeFunction",
+                        "class": "\\Darkling\\Benchmark\\Encoders\\Native\\PhpSerializeFunction",
                         "url": "http://php.net/manual/en/function.serialize.php"
                     }
                 ],
                 "xml": [
                     {
                         "name": "openlss/lib-array2xml",
-                        "class": "\\Benchmark\\Encoders\\Xml\\OpenlssLibArray2Xml",
+                        "class": "\\Darkling\\Benchmark\\Encoders\\Xml\\OpenlssLibArray2Xml",
                         "url": "https://github.com/nullivex/lib-array2xml",
                         "version": "0.5.0"
                     },
                     {
                         "name": "spatie/array-to-xml",
-                        "class": "\\Benchmark\\Encoders\\Xml\\SpatieArrayToXml",
+                        "class": "\\Darkling\\Benchmark\\Encoders\\Xml\\SpatieArrayToXml",
                         "url": "https://github.com/spatie/array-to-xml",
                         "version": "2.2.0"
                     },
                     {
                         "name": "fillup/array2xml",
-                        "class": "\\Benchmark\\Encoders\\Xml\\FillupArray2Xml",
+                        "class": "\\Darkling\\Benchmark\\Encoders\\Xml\\FillupArray2Xml",
                         "url": "https://github.com/fillup/array2xml",
                         "version": "0.5.1"
                     }
@@ -36,7 +35,7 @@
                 "json": [
                     {
                         "name": "PHP native function json_encode",
-                        "class": "\\Benchmark\\Encoders\\Json\\NativeJsonEncodeFunction",
+                        "class": "\\Darkling\\Benchmark\\Encoders\\Json\\NativeJsonEncodeFunction",
                         "url": "http://php.net/manual/en/function.json-encode.php"
                     }
                 ]
@@ -47,8 +46,8 @@
                 "native": [
                     {
                         "name": "PHP native function unserialize",
-                        "class": "\\Benchmark\\Encoders\\Native\\PhpSerializeFunction",
-                        "converter": "\\Benchmark\\Decoders\\SerializeConverter",
+                        "class": "\\Darkling\\Benchmark\\Encoders\\Native\\PhpSerializeFunction",
+                        "converter": "\\Darkling\\Benchmark\\Converters\\SerializeConverter",
                         "url": "http://php.net/manual/en/function.unserialize.php"
                     }
                 ]

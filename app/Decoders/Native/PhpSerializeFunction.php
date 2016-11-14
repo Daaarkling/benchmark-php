@@ -1,6 +1,6 @@
 <?php
 
-namespace Benchmark\Decoders\Native;
+namespace Darkling\Benchmark\Decoders\Native;
 
 
 use Benchmark\IUnitBenchmarkTest;

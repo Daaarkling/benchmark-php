@@ -1,13 +1,13 @@
 <?php
 
-namespace Benchmark\Encoders\Xml;
+namespace Darkling\Benchmark\Encoders\Xml;
 
 
-use Benchmark\IUnitBenchmarkTest;
+use Darkling\Benchmark\IUnitBenchmark;
 use fillup\A2X;
 
 
-class FillupArray2Xml implements IUnitBenchmarkTest
+class FillupArray2Xml implements IUnitBenchmark
 {
 
 	public function execute($data)

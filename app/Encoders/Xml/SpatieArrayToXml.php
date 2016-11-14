@@ -1,13 +1,13 @@
 <?php
 
-namespace Benchmark\Encoders\Xml;
+namespace Darkling\Benchmark\Encoders\Xml;
 
 
-use Benchmark\IUnitBenchmarkTest;
+use Darkling\Benchmark\IUnitBenchmark;
 use Spatie\ArrayToXml\ArrayToXml;
 
 
-class SpatieArrayToXml implements IUnitBenchmarkTest
+class SpatieArrayToXml implements IUnitBenchmark
 {
 
 	public function execute($data)

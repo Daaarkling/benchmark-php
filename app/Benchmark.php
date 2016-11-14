@@ -1,17 +1,20 @@
 <?php
 
 
-namespace Benchmark;
+namespace Darkling\Benchmark;
 
 
 
-class Benchmark
+use Darkling\Benchmark\Converters\IDataConverter;
+use Darkling\Benchmark\Utils\ClassInstantiator;
+
+abstract class Benchmark
 {
 	/** @var array */
-	private $config;
+	protected $config;
 
 	/** @var string */
-	private $testData;
+	protected $testData;
 
 
 	public function __construct(array $config)
@@ -41,7 +44,7 @@ class Benchmark
 				foreach ($format as $lib){
 
 					$className = $lib['class'];
-					if (!($class = ClassInstantiator::instantiateClass($className, IUnitBenchmarkTest::class))) {
+					if (!($class = ClassInstantiator::instantiateClass($className, IUnitBenchmark::class))) {
 						continue;
 					}
 
@@ -81,11 +84,7 @@ class Benchmark
 	}
 
 
-	protected function handleResult($result)
-	{
-		var_dump($result);
-		exit;
-	}
+	protected abstract function handleResult($result);
 
 
 

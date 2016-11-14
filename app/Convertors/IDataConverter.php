@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Benchmark;
+namespace Darkling\Benchmark\Converters;
 
 
 interface IDataConverter

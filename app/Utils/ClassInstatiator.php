@@ -1,12 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Jan
- * Date: 10. 11. 2016
- * Time: 18:52
- */
 
-namespace Benchmark;
+namespace Darkling\Benchmark\Utils;
 
 
 class ClassInstantiator

@@ -9,10 +9,6 @@
 			"type": "number",
 			"minimum": 10
 		},
-		"outputToFile": {
-			"description": "Should output be written into file or not (print to screen).",
-			"type": "boolean"
-		},
 		"testData": {
 			"description": "Name of file with test data.",
 			"type": "string"

@@ -1,13 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Jan
- * Date: 10. 11. 2016
- * Time: 15:19
- */
 
-namespace Benchmark;
 
+namespace Darkling\Benchmark\Utils;
+
+use Darkling\Benchmark\Converters\IDataConverter;
+use Darkling\Benchmark\IUnitBenchmark;
 use JsonSchema\Validator as JValidator;
 use Nette\Utils\Json;
 
@@ -59,7 +56,7 @@ class Validator
 	 */
 	public function validateConfig()
 	{
-		$schema = Json::decode(file_get_contents(__DIR__ . '/../config/' . self::$schema));
+		$schema = Json::decode(file_get_contents(__DIR__ . '/../../config/' . self::$schema));
 
 		$this->schemaValidator->check($this->config, $schema);
 
@@ -88,7 +85,7 @@ class Validator
 							$this->addClassError($lib->converter);
 						}
 					}
-					if (!$this->isClassValid($lib->class, IUnitBenchmarkTest::class)) {
+					if (!$this->isClassValid($lib->class, IUnitBenchmark::class)) {
 						$this->addClassError($lib->class);
 					}
 				}
@@ -124,7 +121,7 @@ class Validator
 	 */
 	public function validateTestData()
 	{
-		$testDataFile = __DIR__ . '/../config/' . $this->config->testData;
+		$testDataFile = __DIR__ . '/../../config/' . $this->config->testData;
 		if (!file_exists($testDataFile)) {
 			$this->errors['testData'][] = [
 					'property' => 'testData',
