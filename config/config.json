@@ -1,7 +1,7 @@
 {
     "repetitions": 10,
     "testData": "testdata.json",
-    "tests": {
+    "benchmark": {
         "encoders": {
             "converter": "\\Darkling\\Benchmark\\Converters\\ArrayConverter",
             "formats": {

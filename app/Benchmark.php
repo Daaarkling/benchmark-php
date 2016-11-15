@@ -30,7 +30,7 @@ abstract class Benchmark
 		$data = NULL;
 		$repetitions = $this->config['repetitions'];
 
-		foreach ($this->config['tests'] as $typeName => $type){
+		foreach ($this->config['benchmark'] as $typeName => $type){
 
 			if (key_exists('converter', $type) && $type['converter']) {
 				$converterName = $type['converter'];
@@ -41,22 +41,23 @@ abstract class Benchmark
 			}
 
 			foreach ($type['formats'] as $formatName => $format){
-				foreach ($format as $lib){
+
+				if (key_exists('converter', $format) && $format['converter']) {
+					$converterName = $format['converter'];
+					if (!($dataConverter = ClassInstantiator::instantiateClass($converterName, IDataConverter::class))) {
+						continue;
+					}
+					$data = $dataConverter->convertData($this->testData);
+				}
+
+				if (!$data) {
+					continue;
+				}
+
+				foreach ($format['libs'] as $lib){
 
 					$className = $lib['class'];
 					if (!($class = ClassInstantiator::instantiateClass($className, IUnitBenchmark::class))) {
-						continue;
-					}
-
-					if (key_exists('converter', $lib) && $lib['converter']) {
-						$converterName = $lib['converter'];
-						if (!($dataConverter = ClassInstantiator::instantiateClass($converterName, IDataConverter::class))) {
-							continue;
-						}
-						$data = $dataConverter->convertData($this->testData);
-					}
-
-					if (!$data) {
 						continue;
 					}
 

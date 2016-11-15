@@ -71,20 +71,23 @@ class Validator
 	 */
 	public function validateClasses()
 	{
-		foreach ($this->config->tests as $type) {
+		foreach ($this->config->benchmark as $type) {
 
 			if (property_exists($type, 'converter')) {
 				if (!$this->isClassValid($type->converter, IDataConverter::class)) {
 					$this->addClassError($type->converter);
 				}
 			}
+
 			foreach ($type->formats as $format) {
-				foreach ($format as $lib) {
-					if (property_exists($lib, 'converter')) {
-						if (!$this->isClassValid($lib->converter, IDataConverter::class)) {
-							$this->addClassError($lib->converter);
-						}
+
+				if (property_exists($format, 'converter')) {
+					if (!$this->isClassValid($format->converter, IDataConverter::class)) {
+						$this->addClassError($format->converter);
 					}
+				}
+
+				foreach ($format->libs as $lib) {
 					if (!$this->isClassValid($lib->class, IUnitBenchmark::class)) {
 						$this->addClassError($lib->class);
 					}
