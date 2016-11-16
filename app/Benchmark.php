@@ -61,7 +61,7 @@ abstract class Benchmark
 						continue;
 					}
 
-					$string = '';
+					$string = NULL;
 					$libName = key_exists('version', $lib) ? $lib['name'] . ' ' . $lib['version'] : $lib['name'];
 					for ($i = 1; $i <= $repetitions; $i++) {
 
@@ -73,7 +73,7 @@ abstract class Benchmark
 					}
 
 					// size of string is always same (at least it should be), there is no need to repeat the process
-					if ($string) {
+					if (is_string($string)) {
 						$size = strlen($string);
 						$result[$typeName][$formatName][$libName]['size'] = $size;
 					}

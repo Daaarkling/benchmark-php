@@ -15,6 +15,7 @@
         "justinrainbow/json-schema": "^4.0",
         "openlss/lib-array2xml": "0.5.0",
         "spatie/array-to-xml": "2.2",
-        "fillup/array2xml": "0.5.1"
+        "fillup/array2xml": "0.5.1",
+        "rybakit/msgpack": "0.2.1"
     }
 }
