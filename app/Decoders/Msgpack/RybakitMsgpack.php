@@ -9,6 +9,7 @@ use MessagePack\BufferUnpacker;
 
 class RybakitMsgpack implements IUnitBenchmark
 {
+	/** @var BufferUnpacker */
     private $bufferUnpacker;
 
     public function __construct()

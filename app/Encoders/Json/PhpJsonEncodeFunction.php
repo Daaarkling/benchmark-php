@@ -5,7 +5,7 @@ namespace Darkling\Benchmark\Encoders\Json;
 
 use Darkling\Benchmark\IUnitBenchmark;
 
-class NativeJsonEncodeFunction implements IUnitBenchmark
+class PhpJsonEncodeFunction implements IUnitBenchmark
 {
 
 

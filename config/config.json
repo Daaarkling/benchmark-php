@@ -9,9 +9,25 @@
 					"converter": "\\Darkling\\Benchmark\\Converters\\ArrayConverter",
 					"libs": [
 						{
-							"name": "PHP native function serialize",
+							"name": "PHP serialize",
 							"class": "\\Darkling\\Benchmark\\Encoders\\Native\\PhpSerializeFunction",
 							"url": "http://php.net/manual/en/function.serialize.php"
+						}
+					]
+				},
+				"json": {
+					"converter": "\\Darkling\\Benchmark\\Converters\\ArrayConverter",
+					"libs": [
+						{
+							"name": "PHP json_encode",
+							"class": "\\Darkling\\Benchmark\\Encoders\\Json\\PhpJsonEncodeFunction",
+							"url": "http://php.net/manual/en/function.json-encode.php"
+						},
+						{
+							"name": "webmozart/json",
+							"class": "\\Darkling\\Benchmark\\Encoders\\Json\\WebmozartJson",
+							"url": "https://github.com/webmozart/json",
+							"version": "1.2.2"
 						}
 					]
 				},
@@ -61,9 +77,25 @@
 					"converter": "\\Darkling\\Benchmark\\Converters\\SerializeConverter",
 					"libs": [
 						{
-							"name": "PHP native function unserialize",
+							"name": "PHP unserialize",
 							"class": "\\Darkling\\Benchmark\\Decoders\\Native\\PhpUnserializeFunction",
 							"url": "http://php.net/manual/en/function.unserialize.php"
+						}
+					]
+				},
+				"json": {
+					"converter": "\\Darkling\\Benchmark\\Converters\\JsonConverter",
+					"libs": [
+						{
+							"name": "PHP json_decode",
+							"class": "\\Darkling\\Benchmark\\Decoders\\Json\\PhpJsonDecodeFunction",
+							"url": "http://php.net/manual/en/function.json-decode.php"
+						},
+						{
+							"name": "webmozart/json",
+							"class": "\\Darkling\\Benchmark\\Decoders\\Json\\WebmozartJson",
+							"url": "https://github.com/webmozart/json",
+							"version": "1.2.2"
 						}
 					]
 				},
