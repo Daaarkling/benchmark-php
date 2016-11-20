@@ -1,6 +1,6 @@
 <?php
 
-namespace Darkling\Benchmark;
+namespace Benchmark;
 
 
 interface IUnitBenchmark

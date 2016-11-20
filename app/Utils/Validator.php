@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Darkling\Benchmark\Utils;
+namespace Benchmark\Utils;
 
-use Darkling\Benchmark\Converters\IDataConverter;
-use Darkling\Benchmark\IUnitBenchmark;
+use Benchmark\Converters\IDataConverter;
+use Benchmark\IUnitBenchmark;
 use JsonSchema\Validator as JValidator;
 use Nette\Utils\Json;
 
@@ -103,7 +103,7 @@ class Validator
 	 */
 	public function isClassValid($class, $type)
 	{
-		$object = ClassInstantiator::instantiateClass($class, $type);
+		$object = ClassHelper::instantiateClass($class, $type);
 		return $object !== NULL;
 	}
 

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Darkling\Benchmark\Commands;
+namespace Benchmark\Commands;
 
 
-use Darkling\Benchmark\Utils\Validator;
+use Benchmark\Utils\Validator;
 use Nette\Utils\Json;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -24,7 +24,7 @@ class ValidateCommand extends Command
 			->setDescription('Validate config file')
 			->setHelp('Validate config file against the schema. Check if test data file exists and also check given classes and converters if they exist and are instantiable.')
 			->addOption('config', 'c', InputOption::VALUE_REQUIRED, 'Set different config file (must by located in config folder).', 'config.json')
-			->addOption('data', 'd', InputOption::VALUE_REQUIRED, 'Set different test data (must by located in config folder).', 'testData.json');
+			->addOption('data', 'd', InputOption::VALUE_REQUIRED, 'Set different test data (must by located in config folder).');
 	}
 
 
@@ -33,6 +33,7 @@ class ValidateCommand extends Command
 	{
 		$io = new SymfonyStyle($input, $output);
 
+		// config
 		$configFileName = $input->getOption('config');
 		$configFile = __DIR__ . '/../../config/' . $configFileName;
 		if (!file_exists($configFile)) {
@@ -42,18 +43,24 @@ class ValidateCommand extends Command
 
 		$config = Json::decode(file_get_contents($configFile));
 
+		// test data
 		$testDataFileName = $input->getOption('data');
-		$config->testData = $testDataFileName;
+        if ($testDataFileName !== NULL){
+		    $config->testData = $testDataFileName;
+        }
 
+		// validation
 		$validator = new Validator($config);
 		$validator->validate();
 
 
+		// ok
 		if ($validator->isValid()) {
-			$io->title('Validation looks great!');
+			$io->title('Validation passed!');
 			return 0;
 		}
 
+		// errors
 		foreach ($validator->getErrors() as $type => $errors) {
 			$io->section($type);
 			foreach ($errors as $error) {

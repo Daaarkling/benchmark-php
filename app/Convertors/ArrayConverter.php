@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Darkling\Benchmark\Converters;
+namespace Benchmark\Converters;
 
 
 use Nette\Utils\Json;

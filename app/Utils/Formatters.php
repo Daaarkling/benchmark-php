@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Darkling\Benchmark\Utils;
+namespace Benchmark\Utils;
 
 
-class Formaters
+class Formatters
 {
 
 
@@ -31,7 +31,8 @@ class Formaters
 
 
 	/**
-	 * Converts microseconds to milliseconds
+	 * Converts microseconds to milliseconds and add units
+	 *
 	 * @param  float $microseconds
 	 * @param  int $precision
 	 * @return string

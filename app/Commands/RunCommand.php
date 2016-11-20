@@ -1,11 +1,12 @@
 <?php
-namespace Darkling\Benchmark\Commands;
+
+namespace Benchmark\Commands;
 
 
-use Darkling\Benchmark\BenchmarkConsoleOutput;
-use Darkling\Benchmark\BenchmarkCsvOutput;
-use Darkling\Benchmark\BenchmarkDumpOutput;
-use Darkling\Benchmark\BenchmarkFileOutput;
+use Benchmark\BenchmarkConsoleOutput;
+use Benchmark\BenchmarkCsvOutput;
+use Benchmark\BenchmarkDumpOutput;
+use Benchmark\BenchmarkFileOutput;
 use Nette\Utils\Json;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -29,11 +30,11 @@ class RunCommand extends Command
 	{
 		$this->setName('benchmark:run')
 			->setDescription('Run benchmark with given config and test data.')
-			->setHelp('help me')
+			->setHelp('First run validation any potential errors are shown in console. Then proceed to benchmark itself. You can choose from several options how to handle result: ' . implode(', ', self::OUTPUTS) . '.')
 			->addOption('config', 'c', InputOption::VALUE_REQUIRED, 'Set config file (must by located in config folder).', 'config.json')
-			->addOption('data', 'd', InputOption::VALUE_REQUIRED, 'Set test data (must by located in config folder).', 'testData.json')
-			->addOption('repetitions', 'r', InputOption::VALUE_REQUIRED, 'Set number of repetitions', 10)
-			->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'Set output. You can choose from several choices: ' . implode(', ', self::OUTPUTS), 'console');
+			->addOption('data', 'd', InputOption::VALUE_REQUIRED, 'Set test data (must by located in config folder).')
+			->addOption('repetitions', 'r', InputOption::VALUE_REQUIRED, 'Set number of repetitions')
+			->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'Set output. You can choose from several choices: ' . implode(', ', self::OUTPUTS) . '.', 'console');
 	}
 
 
@@ -51,17 +52,20 @@ class RunCommand extends Command
 		}
 
 		$config = Json::decode(file_get_contents($configFile), Json::FORCE_ARRAY);
+
+
+		// test data
 		$testDataFileName = $input->getOption('data');
-		$config['testData'] = $testDataFileName;
+		if ($testDataFileName !== NULL){
+			$config['testData'] = $testDataFileName;
+		}
 
 
 		// repetitions
 		$repetitions = $input->getOption('repetitions');
-		if (!is_numeric($repetitions) || $repetitions <= 0) {
-			$io->error('Number of repetitions must be greater then zero.');
-			return 1;
+		if ($repetitions !== NULL) {
+			$config['repetitions'] = $repetitions;
 		}
-		$config['repetitions'] = $repetitions;
 
 
 		// output
@@ -77,7 +81,7 @@ class RunCommand extends Command
 		$arguments = [
 			'command' => 'benchmark:valid',
 			'--config' => $configFileName,
-			'--data' => $testDataFileName,
+			'--data' => $config['testData'],
 		];
 
 		$returnCode = $validateCommand->run(new ArrayInput($arguments), $output);
@@ -100,7 +104,7 @@ class RunCommand extends Command
 			}
 
 			$benchmark->run();
-			$io->title('Benchmark was done successfully!');
+			$io->title('Benchmark processed successfully!');
 			return $returnCode;
 		}
 		return 1;

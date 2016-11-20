@@ -1,13 +1,13 @@
 <?php
 
 
-namespace Darkling\Benchmark;
+namespace Benchmark;
 
 
 
 use League\Csv\Writer;
 use Nette\Utils\Strings;
-use SplTempFileObject;
+
 
 class BenchmarkCsvOutput extends Benchmark
 {

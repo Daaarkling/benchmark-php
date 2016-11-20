@@ -1,12 +1,12 @@
 <?php
 
-namespace Darkling\Benchmark\Utils;
+namespace Benchmark\Utils;
 
 
-class ClassInstantiator
+class ClassHelper
 {
 	/**
-	 * Create object $className and check type $instanceof
+	 * Attempt to create object from given $className and check if implements $instanceof
 	 *
 	 * @param string $className
 	 * @param string $instanceof

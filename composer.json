@@ -17,6 +17,7 @@
         "spatie/array-to-xml": "2.2",
         "fillup/array2xml": "0.5.1",
         "rybakit/msgpack": "0.2.1",
-        "webmozart/json": "1.2"
+        "webmozart/json": "1.2",
+        "protobuf-php/protobuf": "0.1.3"
     }
 }

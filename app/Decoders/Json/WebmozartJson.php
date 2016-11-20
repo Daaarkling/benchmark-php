@@ -1,9 +1,9 @@
 <?php
 
-namespace Darkling\Benchmark\Decoders\Json;
+namespace Benchmark\Decoders\Json;
 
 
-use Darkling\Benchmark\IUnitBenchmark;
+use Benchmark\IUnitBenchmark;
 use Webmozart\Json\JsonDecoder;
 
 

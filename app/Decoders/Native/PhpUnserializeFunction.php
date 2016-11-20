@@ -1,10 +1,10 @@
 <?php
 
-namespace Darkling\Benchmark\Decoders\Native;
+namespace Benchmark\Decoders\Native;
 
 
 
-use Darkling\Benchmark\IUnitBenchmark;
+use Benchmark\IUnitBenchmark;
 
 class PhpUnserializeFunction implements IUnitBenchmark
 {

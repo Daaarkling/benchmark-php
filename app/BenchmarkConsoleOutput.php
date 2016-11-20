@@ -1,10 +1,10 @@
 <?php
 
 
-namespace Darkling\Benchmark;
+namespace Benchmark;
 
 
-use Darkling\Benchmark\Utils\Formaters;
+use Benchmark\Utils\Formatters;
 use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -59,7 +59,7 @@ class BenchmarkConsoleOutput extends Benchmark
 				for ($j = 0; $j < count($libs[$headers[0]]['time']); $j++) {
 					$row = [];
 					foreach ($headers as $libName) {
-						$row[] = Formaters::milliseconds($libs[$libName]['time'][$j]);
+						$row[] = Formatters::milliseconds($libs[$libName]['time'][$j]);
 					}
 					$rows[] = $row;
 				}
@@ -67,7 +67,7 @@ class BenchmarkConsoleOutput extends Benchmark
 				// compute means
 				$means = [];
 				foreach ($headers as $libName) {
-					$means[] = $mean = Formaters::milliseconds(array_sum($libs[$libName]['time']) / count($libs[$libName]['time']));
+					$means[] = $mean = Formatters::milliseconds(array_sum($libs[$libName]['time']) / count($libs[$libName]['time']));
 					$summary['means'][] = $mean;
 					$summary['headers'][] = $libName;
 				}
@@ -86,7 +86,7 @@ class BenchmarkConsoleOutput extends Benchmark
 					$rows = [];
 					$row = [];
 					foreach ($headers as $libName) {
-						$row[] = $size = Formaters::bytes($libs[$libName]['size']);
+						$row[] = $size = Formatters::bytes($libs[$libName]['size']);
 						$summary['sizes'][] = $size;
 					}
 					$rows[] = $row;

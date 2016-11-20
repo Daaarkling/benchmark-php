@@ -1,9 +1,9 @@
 <?php
 
-namespace Darkling\Benchmark\Encoders\Json;
+namespace Benchmark\Encoders\Json;
 
 
-use Darkling\Benchmark\IUnitBenchmark;
+use Benchmark\IUnitBenchmark;
 
 class PhpJsonEncodeFunction implements IUnitBenchmark
 {

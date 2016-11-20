@@ -1,9 +1,9 @@
 <?php
 
-namespace Darkling\Benchmark\Decoders\Xml;
+namespace Benchmark\Decoders\Xml;
 
 
-use Darkling\Benchmark\IUnitBenchmark;
+use Benchmark\IUnitBenchmark;
 
 
 class MsgpackOfficial implements IUnitBenchmark

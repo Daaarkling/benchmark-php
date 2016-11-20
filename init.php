@@ -1,8 +1,8 @@
 <?php
 
 use Composer\Autoload\ClassLoader;
-use Darkling\Benchmark\Commands\RunCommand;
-use Darkling\Benchmark\Commands\ValidateCommand;
+use Benchmark\Commands\RunCommand;
+use Benchmark\Commands\ValidateCommand;
 use Nette\Caching\Storages\FileStorage;
 use Nette\Loaders\RobotLoader;
 use Symfony\Component\Console\Application;

@@ -1,9 +1,9 @@
 <?php
 
-namespace Darkling\Benchmark\Encoders\Native;
+namespace Benchmark\Encoders\Native;
 
 
-use Darkling\Benchmark\IUnitBenchmark;
+use Benchmark\IUnitBenchmark;
 
 class PhpSerializeFunction implements IUnitBenchmark
 {

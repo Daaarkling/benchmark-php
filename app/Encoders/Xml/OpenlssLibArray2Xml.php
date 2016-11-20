@@ -1,9 +1,9 @@
 <?php
 
-namespace Darkling\Benchmark\Encoders\Xml;
+namespace Benchmark\Encoders\Xml;
 
 
-use Darkling\Benchmark\IUnitBenchmark;
+use Benchmark\IUnitBenchmark;
 use LSS\Array2XML;
 
 

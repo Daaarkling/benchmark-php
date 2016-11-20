@@ -1,10 +1,9 @@
 <?php
 
-namespace Darkling\Benchmark\Encoders\Xml;
+namespace Benchmark\Encoders\Xml;
 
 
-use Darkling\Benchmark\IUnitBenchmark;
-use Sabre\Xml\Service;
+use Benchmark\IUnitBenchmark;
 
 
 class MsgpackOfficial implements IUnitBenchmark

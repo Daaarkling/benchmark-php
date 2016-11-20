@@ -1,12 +1,12 @@
 <?php
 
 
-namespace Darkling\Benchmark;
+namespace Benchmark;
 
 
 
-use Darkling\Benchmark\Converters\IDataConverter;
-use Darkling\Benchmark\Utils\ClassInstantiator;
+use Benchmark\Converters\IDataConverter;
+use Benchmark\Utils\ClassHelper;
 
 abstract class Benchmark
 {
@@ -24,6 +24,9 @@ abstract class Benchmark
 	}
 
 
+	/**
+	 * Run benchmark
+	 */
 	public function run()
 	{
 		$result = [];
@@ -34,7 +37,7 @@ abstract class Benchmark
 
 			if (key_exists('converter', $type) && $type['converter']) {
 				$converterName = $type['converter'];
-				if (!($dataConverter = ClassInstantiator::instantiateClass($converterName, IDataConverter::class))) {
+				if (!($dataConverter = ClassHelper::instantiateClass($converterName, IDataConverter::class))) {
 					continue;
 				}
 				$data = $dataConverter->convertData($this->testData);
@@ -44,7 +47,7 @@ abstract class Benchmark
 
 				if (key_exists('converter', $format) && $format['converter']) {
 					$converterName = $format['converter'];
-					if (!($dataConverter = ClassInstantiator::instantiateClass($converterName, IDataConverter::class))) {
+					if (!($dataConverter = ClassHelper::instantiateClass($converterName, IDataConverter::class))) {
 						continue;
 					}
 					$data = $dataConverter->convertData($this->testData);
@@ -57,7 +60,7 @@ abstract class Benchmark
 				foreach ($format['libs'] as $lib){
 
 					$className = $lib['class'];
-					if (!($class = ClassInstantiator::instantiateClass($className, IUnitBenchmark::class))) {
+					if (!($class = ClassHelper::instantiateClass($className, IUnitBenchmark::class))) {
 						continue;
 					}
 

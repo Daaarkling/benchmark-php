@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Darkling\Benchmark;
+namespace Benchmark;
 
 
 use Nette\Utils\FileSystem;
