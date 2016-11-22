@@ -12,10 +12,15 @@ use Symfony\Component\Console\Application;
 $composer = require __DIR__ . '/vendor/autoload.php';
 
 $loader = new RobotLoader;
-$loader->addDirectory('app');
-$loader->setCacheStorage(new FileStorage('temp'));
+$loader->addDirectory('app')
+	->addDirectory('libs')
+	->setCacheStorage(new FileStorage('temp'));
 //$loader->setTempDirectory('temp');
 $loader->register();
+
+
+$converter = new \Benchmark\Converters\Avro\AvroConverter();
+$converter->convertData(file_get_contents(__DIR__ . '/config/testdata.json'));
 
 
 $app = new Application();

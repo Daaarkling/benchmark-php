@@ -6,7 +6,6 @@
             "converter": "\\Benchmark\\Converters\\ArrayConverter",
 			"formats": {
 				"native": {
-					"converter": "\\Benchmark\\Converters\\ArrayConverter",
 					"libs": [
 						{
 							"name": "PHP serialize",
@@ -16,7 +15,6 @@
 					]
 				},
 				"json": {
-					"converter": "\\Benchmark\\Converters\\ArrayConverter",
 					"libs": [
 						{
 							"name": "PHP json_encode",
@@ -57,26 +55,25 @@
 					"libs": [
 						{
 							"name": "msgpack/msgpack-php",
-							"class": "\\Benchmark\\Encoders\\Xml\\MsgpackOfficial",
+							"class": "\\Benchmark\\Encoders\\Msgpack\\MsgpackOfficial",
 							"url": "https://github.com/msgpack/msgpack-php",
 							"version": "2.0.1"
 						},
 						{
 							"name": "rybakit/msgpack",
-							"class": "\\Benchmark\\Encoders\\Xml\\RybakitMsgpack",
+							"class": "\\Benchmark\\Encoders\\Msgpack\\RybakitMsgpack",
 							"url": "https://github.com/rybakit/msgpack.php",
 							"version": "0.2.1"
 						}
 					]
 				},
-				"protobuf": {
-					"converter": "\\Benchmark\\Converters\\ProtobufPhpProtobuf\\ProtobufConverter",
+				"avro": {
 					"libs": [
 						{
-							"name": "protobuf-php/protobuf",
-							"class": "\\Benchmark\\Encoders\\Protobuf\\ProtobufPhpProtobuf",
-							"url": "https://github.com/protobuf-php/protobuf",
-							"version": "0.1.3"
+							"name": "apache/avro",
+							"class": "\\Benchmark\\Encoders\\Avro\\AvroOfficial",
+							"url": "http://avro.apache.org/",
+							"version": "1.8.1"
 						}
 					]
 				}
@@ -118,6 +115,12 @@
 							"class": "\\Benchmark\\Decoders\\Xml\\OpenlssLibArray2Xml",
 							"url": "https://github.com/nullivex/lib-array2xml",
 							"version": "0.5.0"
+						},
+						{
+							"name": "traeger/SimplestXML",
+							"class": "\\Benchmark\\Decoders\\Xml\\TraegerSimplestXML",
+							"url": "https://github.com/traeger/SimplestXML",
+							"version": "r1"
 						}
 					]
 				},
@@ -126,26 +129,26 @@
 					"libs": [
 						{
 							"name": "msgpack/msgpack-php",
-							"class": "\\Benchmark\\Decoders\\Xml\\MsgpackOfficial",
+							"class": "\\Benchmark\\Decoders\\Msgpack\\MsgpackOfficial",
 							"url": "https://github.com/msgpack/msgpack-php",
 							"version": "2.0.1"
 						},
 						{
 							"name": "rybakit/msgpack",
-							"class": "\\Benchmark\\Decoders\\Xml\\RybakitMsgpack",
+							"class": "\\Benchmark\\Decoders\\Msgpack\\RybakitMsgpack",
 							"url": "https://github.com/rybakit/msgpack.php",
 							"version": "0.2.1"
 						}
 					]
 				},
-				"protobuf": {
-					"converter": "\\Benchmark\\Converters\\ProtobufPhpProtobuf\\ProtobufBinaryConverter",
+				"avro": {
+					"converter": "\\Benchmark\\Converters\\Avro\\AvroConverter",
 					"libs": [
 						{
-							"name": "protobuf-php/protobuf",
-							"class": "\\Benchmark\\Decoders\\Protobuf\\ProtobufPhpProtobuf",
-							"url": "https://github.com/protobuf-php/protobuf",
-							"version": "0.1.3"
+							"name": "apache/avro",
+							"class": "\\Benchmark\\Decoders\\Avro\\AvroOfficial",
+							"url": "http://avro.apache.org/",
+							"version": "1.8.1"
 						}
 					]
 				}

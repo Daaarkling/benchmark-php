@@ -1,6 +1,6 @@
 <?php
 
-namespace Benchmark\Decoders\Xml;
+namespace Benchmark\Decoders\Msgpack;
 
 
 use Benchmark\IUnitBenchmark;
