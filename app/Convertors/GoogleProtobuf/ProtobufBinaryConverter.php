@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Benchmark\Converters\ProtobufPhpProtobuf;
+namespace Benchmark\Converters\GoogleProtobuf;
 
 
 
@@ -13,8 +13,8 @@ class ProtobufBinaryConverter extends ProtobufConverter implements IDataConverte
 
 	public function convertData($jsonTestData)
 	{
-		$data = parent::convertData($jsonTestData);
-	//	return $data->toStream();
+		$persons = parent::convertData($jsonTestData);
+		return $persons->encode();
 	}
 
 

@@ -35,22 +35,30 @@ abstract class Benchmark
 
 		foreach ($this->config['benchmark'] as $typeName => $type){
 
+			$dataGeneral = NULL;
 			if (key_exists('converter', $type) && $type['converter']) {
 				$converterName = $type['converter'];
 				if (!($dataConverter = ClassHelper::instantiateClass($converterName, IDataConverter::class))) {
 					continue;
 				}
-				$data = $dataConverter->convertData($this->testData);
+				$dataGeneral = $dataConverter->convertData($this->testData);
 			}
 
 			foreach ($type['formats'] as $formatName => $format){
 
+				$dataSpecific = NULL;
 				if (key_exists('converter', $format) && $format['converter']) {
 					$converterName = $format['converter'];
 					if (!($dataConverter = ClassHelper::instantiateClass($converterName, IDataConverter::class))) {
 						continue;
 					}
-					$data = $dataConverter->convertData($this->testData);
+					$dataSpecific = $dataConverter->convertData($this->testData);
+				}
+
+				if ($dataSpecific !== NULL) {
+					$data = $dataSpecific;
+				} else {
+					$data = $dataGeneral;
 				}
 
 				if (!$data) {

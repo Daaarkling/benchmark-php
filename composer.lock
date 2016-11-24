@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "210e8e92ee40c80cbcaab88c35f454c9",
-    "content-hash": "160f5d168a2dc1331f2beb0ea3517ab2",
+    "hash": "3a54a69110325dc521fa3831e9486e90",
+    "content-hash": "998f116bc1815747933b11830e05960b",
     "packages": [
         {
             "name": "fillup/array2xml",
@@ -42,6 +42,48 @@
             ],
             "description": "Library for converting arrays to XML",
             "time": "2016-10-14 15:38:30"
+        },
+        {
+            "name": "google/protobuf",
+            "version": "v3.1.0-alpha-1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/google/protobuf.git",
+                "reference": "a428e42072765993ff674fda72863c9f1aa2d268"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/google/protobuf/zipball/a428e42072765993ff674fda72863c9f1aa2d268",
+                "reference": "a428e42072765993ff674fda72863c9f1aa2d268",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": ">=4.8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Google\\": "php/src/Google"
+                },
+                "files": [
+                    "php/src/Google/Protobuf/descriptor.php",
+                    "php/src/Google/Protobuf/descriptor_internal.pb.php",
+                    "php/src/Google/Protobuf/Internal/Type.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "proto library for PHP",
+            "homepage": "https://developers.google.com/protocol-buffers/",
+            "keywords": [
+                "proto"
+            ],
+            "time": "2016-09-24 02:12:45"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -939,7 +981,9 @@
         }
     ],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "google/protobuf": 15
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

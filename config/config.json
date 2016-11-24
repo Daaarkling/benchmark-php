@@ -51,6 +51,17 @@
 						}
 					]
 				},
+				"protobuf": {
+					"converter": "\\Benchmark\\Converters\\GoogleProtobuf\\ProtobufConverter",
+					"libs": [
+						{
+							"name": "google/protobuf",
+							"class": "\\Benchmark\\Encoders\\Protobuf\\GoogleProtobuf",
+							"url": "https://github.com/google/protobuf",
+							"version": "3.1.0"
+						}
+					]
+				},
 				"msgpack": {
 					"libs": [
 						{
@@ -121,6 +132,17 @@
 							"class": "\\Benchmark\\Decoders\\Xml\\TraegerSimplestXML",
 							"url": "https://github.com/traeger/SimplestXML",
 							"version": "r1"
+						}
+					]
+				},
+				"protobuf": {
+					"converter": "\\Benchmark\\Converters\\GoogleProtobuf\\ProtobufBinaryConverter",
+					"libs": [
+						{
+							"name": "google/protobuf",
+							"class": "\\Benchmark\\Decoders\\Protobuf\\GoogleProtobuf",
+							"url": "https://github.com/google/protobuf",
+							"version": "3.1.0"
 						}
 					]
 				},
