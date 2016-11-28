@@ -7,11 +7,7 @@
 		"repetitions": {
 			"description": "Number of repetitions",
 			"type": "number",
-			"minimum": 10
-		},
-		"testData": {
-			"description": "Name of file with test data.",
-			"type": "string"
+			"minimum": 1
 		},
 		"benchmark": {
 			"type": "object",

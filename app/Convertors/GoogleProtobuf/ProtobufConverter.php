@@ -23,7 +23,7 @@ class ProtobufConverter implements IDataConverter
 		foreach ($arrayData['data'] as $personData) {
 
 			$person = new Person();
-			$person->setId($personData['_id']);
+			$person->setId($personData['id']);
 			$person->setIndex($personData['index']);
 			$person->setGuid($personData['guid']);
 			$person->setIsActive($personData['isActive']);

@@ -1,6 +1,5 @@
 {
     "repetitions": 10,
-    "testData": "testdata.json",
     "benchmark": {
         "encoders": {
             "converter": "\\Benchmark\\Converters\\ArrayConverter",

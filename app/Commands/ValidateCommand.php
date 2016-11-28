@@ -14,8 +14,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ValidateCommand extends Command
 {
-	const OUTPUT = ['file', 'csv', 'console', 'dump'];
-
 
 
 	protected function configure()
@@ -23,8 +21,9 @@ class ValidateCommand extends Command
 		$this->setName('benchmark:validate')
 			->setDescription('Validate config file')
 			->setHelp('Validate config file against the schema. Check if test data file exists and also check given classes and converters if they exist and are instantiable.')
-			->addOption('config', 'c', InputOption::VALUE_REQUIRED, 'Set different config file (must by located in config folder).', 'config.json')
-			->addOption('data', 'd', InputOption::VALUE_REQUIRED, 'Set different test data (must by located in config folder).');
+			->addOption('config', 'c', InputOption::VALUE_REQUIRED, 'Set different config file.')
+			->addOption('repetitions', 'r', InputOption::VALUE_REQUIRED, 'Set number of repetitions')
+			->addOption('data', 'd', InputOption::VALUE_REQUIRED, 'Set test data.');
 	}
 
 
@@ -34,14 +33,24 @@ class ValidateCommand extends Command
 		$io = new SymfonyStyle($input, $output);
 
 		// config
-		$configFileName = $input->getOption('config');
-		$configFile = __DIR__ . '/../../config/' . $configFileName;
-		if (!file_exists($configFile)) {
+		$configGiven = $input->getOption('config');
+		if ($configGiven !== NULL && ($configReal = realpath($configGiven))) {
+			$configFile = $configReal;
+		} elseif (($configReal = realpath(Validator::$configFile))) {
+			$configFile = $configReal;
+		} else {
 			$io->error('Config file was not found nor given.');
 			return 1;
 		}
-
 		$config = Json::decode(file_get_contents($configFile));
+
+
+		// repetitions
+		$repetitions = $input->getOption('repetitions');
+		if ($repetitions !== NULL) {
+			$config->repetitions = (int) $repetitions;
+		}
+
 
 		// test data
 		$testDataFileName = $input->getOption('data');

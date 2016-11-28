@@ -13,7 +13,13 @@ use Nette\Utils\Json;
 class Validator
 {
 	/** @var string */
-	public static $schema = 'schema.json';
+	public static $configFile = __DIR__ . '/../../config/config.json';
+
+	/** @var string */
+	public static $schemaFile = __DIR__ . '/../../config/schema.json';
+
+	/** @var string */
+	public static $testDataFile = __DIR__ . '/../../config/testdata.json';
 
 	/** @var array */
 	private $errors = [];
@@ -56,7 +62,7 @@ class Validator
 	 */
 	public function validateConfig()
 	{
-		$schema = Json::decode(file_get_contents(__DIR__ . '/../../config/' . self::$schema));
+		$schema = Json::decode(file_get_contents(self::$schemaFile));
 
 		$this->schemaValidator->check($this->config, $schema);
 
@@ -124,12 +130,12 @@ class Validator
 	 */
 	public function validateTestData()
 	{
-		$testDataFile = __DIR__ . '/../../config/' . $this->config->testData;
-		if (!file_exists($testDataFile)) {
+		$testDataFileName = $this->config->testData;
+		if (!(realpath($testDataFileName) || realpath(self::$testDataFile))){
 			$this->errors['testData'][] = [
-					'property' => 'testData',
-					'message' => 'Test data file was not found.'
-				];
+				'property' => 'testData',
+				'message' => 'Test data file was not found.'
+			];
 		}
 	}
 

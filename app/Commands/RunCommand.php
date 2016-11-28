@@ -7,6 +7,7 @@ use Benchmark\BenchmarkConsoleOutput;
 use Benchmark\BenchmarkCsvOutput;
 use Benchmark\BenchmarkDumpOutput;
 use Benchmark\BenchmarkFileOutput;
+use Benchmark\Utils\Validator;
 use Nette\Utils\Json;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -31,8 +32,8 @@ class RunCommand extends Command
 		$this->setName('benchmark:run')
 			->setDescription('Run benchmark with given config and test data.')
 			->setHelp('First run validation any potential errors are shown in console. Then proceed to benchmark itself. You can choose from several options how to handle result: ' . implode(', ', self::OUTPUTS) . '.')
-			->addOption('config', 'c', InputOption::VALUE_REQUIRED, 'Set config file (must by located in config folder).', 'config.json')
-			->addOption('data', 'd', InputOption::VALUE_REQUIRED, 'Set test data (must by located in config folder).')
+			->addOption('config', 'c', InputOption::VALUE_REQUIRED, 'Set config file.')
+			->addOption('data', 'd', InputOption::VALUE_REQUIRED, 'Set test data.')
 			->addOption('repetitions', 'r', InputOption::VALUE_REQUIRED, 'Set number of repetitions')
 			->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'Set output. You can choose from several choices: ' . implode(', ', self::OUTPUTS) . '.', 'console');
 	}
@@ -44,27 +45,34 @@ class RunCommand extends Command
 		$io = new SymfonyStyle($input, $output);
 
 		// config
-		$configFileName = $input->getOption('config');
-		$configFile = __DIR__ . '/../../config/' . $configFileName;
-		if (!file_exists($configFile)) {
+		$configGiven = $input->getOption('config');
+		if ($configGiven !== NULL && ($configReal = realpath($configGiven))) {
+			$configFile = $configReal;
+		} elseif (($configReal = realpath(Validator::$configFile))) {
+			$configFile = $configReal;
+		} else {
 			$io->error('Config file was not found nor given.');
 			return 1;
 		}
-
 		$config = Json::decode(file_get_contents($configFile), Json::FORCE_ARRAY);
 
 
 		// test data
 		$testDataFileName = $input->getOption('data');
-		if ($testDataFileName !== NULL){
-			$config['testData'] = $testDataFileName;
+		if ($testDataFileName !== NULL && ($realPath = realpath($testDataFileName))){
+			$config['testData'] = $realPath;
+		} elseif (($realPath = realpath(Validator::$testDataFile))) {
+			$config['testData'] = $realPath;
+		} else {
+			$io->error('Test data file was not found nor given.');
+			return 1;
 		}
 
 
 		// repetitions
 		$repetitions = $input->getOption('repetitions');
 		if ($repetitions !== NULL) {
-			$config['repetitions'] = $repetitions;
+			$config['repetitions'] = (int) $repetitions;
 		}
 
 
@@ -80,8 +88,9 @@ class RunCommand extends Command
 		$validateCommand = $this->getApplication()->find('benchmark:valid');
 		$arguments = [
 			'command' => 'benchmark:valid',
-			'--config' => $configFileName,
+			'--config' => $configFile,
 			'--data' => $config['testData'],
+			'--repetitions' => $config['repetitions'],
 		];
 
 		$returnCode = $validateCommand->run(new ArrayInput($arguments), $output);

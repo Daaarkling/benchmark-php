@@ -1,7 +1,7 @@
 {
 	"data": [
 		{
-			"_id": "58344fae916de7ac6470585b",
+			"id": "58344fae916de7ac6470585b",
 			"index": 0,
 			"guid": "739fc0df-2705-4b8f-b4d7-b74b2c68bf63",
 			"isActive": false,
@@ -46,7 +46,7 @@
 			"favoriteFruit": "strawberry"
 		},
 		{
-			"_id": "58344faeecbfaaed34e6a9a9",
+			"id": "58344faeecbfaaed34e6a9a9",
 			"index": 1,
 			"guid": "f6365c98-b7be-4913-842f-8da2894d86d3",
 			"isActive": true,
@@ -91,7 +91,7 @@
 			"favoriteFruit": "strawberry"
 		},
 		{
-			"_id": "58344fae98b10838da033a49",
+			"id": "58344fae98b10838da033a49",
 			"index": 2,
 			"guid": "e8050874-ab9c-43d3-ab63-e001ef915ce2",
 			"isActive": true,
@@ -136,7 +136,7 @@
 			"favoriteFruit": "banana"
 		},
 		{
-			"_id": "58344faeff6dce1148c1df10",
+			"id": "58344faeff6dce1148c1df10",
 			"index": 3,
 			"guid": "85607c21-471e-4722-af56-c67621c8c5af",
 			"isActive": true,
@@ -181,7 +181,7 @@
 			"favoriteFruit": "strawberry"
 		},
 		{
-			"_id": "58344fae542e186c09fe7b9d",
+			"id": "58344fae542e186c09fe7b9d",
 			"index": 4,
 			"guid": "66139fdf-d4f0-4256-a8b8-4d75623e2ee7",
 			"isActive": false,
@@ -226,7 +226,7 @@
 			"favoriteFruit": "strawberry"
 		},
 		{
-			"_id": "58344fae5feafdd6e64d1f6d",
+			"id": "58344fae5feafdd6e64d1f6d",
 			"index": 5,
 			"guid": "6f025d13-0509-4fc4-a963-2841d06aa309",
 			"isActive": true,
@@ -271,7 +271,7 @@
 			"favoriteFruit": "banana"
 		},
 		{
-			"_id": "58344faeb1ac58f178613574",
+			"id": "58344faeb1ac58f178613574",
 			"index": 6,
 			"guid": "85c3d7b3-84af-4c65-9528-3f690493b4d6",
 			"isActive": true,
@@ -316,7 +316,7 @@
 			"favoriteFruit": "banana"
 		},
 		{
-			"_id": "58344fae281c17b535c093a4",
+			"id": "58344fae281c17b535c093a4",
 			"index": 7,
 			"guid": "58fa88ef-5faa-4beb-b37b-263ca9a09e91",
 			"isActive": true,
@@ -361,7 +361,7 @@
 			"favoriteFruit": "banana"
 		},
 		{
-			"_id": "58344fae40379d802ee299c3",
+			"id": "58344fae40379d802ee299c3",
 			"index": 8,
 			"guid": "2fffa727-b8d2-4d0c-8547-b2e92a1e4f0e",
 			"isActive": true,
@@ -406,7 +406,7 @@
 			"favoriteFruit": "apple"
 		},
 		{
-			"_id": "58344fae57f478a00c10d029",
+			"id": "58344fae57f478a00c10d029",
 			"index": 9,
 			"guid": "1d67b5f7-3c84-4fd2-b479-65e5c469fe19",
 			"isActive": false,

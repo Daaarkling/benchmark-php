@@ -20,7 +20,7 @@ abstract class Benchmark
 	public function __construct(array $config)
 	{
 		$this->config = $config;
-		$this->testData = file_get_contents(__DIR__ . '/../config/' . $config['testData']);
+		$this->testData = file_get_contents($config['testData']);
 	}
 
 
