@@ -59,7 +59,7 @@ class BenchmarkConsoleOutput extends Benchmark
 				for ($j = 0; $j < count($libs[$headers[0]]['time']); $j++) {
 					$row = [];
 					foreach ($headers as $libName) {
-						$row[] = Formatters::milliseconds($libs[$libName]['time'][$j]);
+						$row[] = Formatters::seconds($libs[$libName]['time'][$j]);
 					}
 					$rows[] = $row;
 				}
@@ -67,7 +67,7 @@ class BenchmarkConsoleOutput extends Benchmark
 				// compute means
 				$means = [];
 				foreach ($headers as $libName) {
-					$means[] = $mean = Formatters::milliseconds(array_sum($libs[$libName]['time']) / count($libs[$libName]['time']));
+					$means[] = $mean = Formatters::seconds(array_sum($libs[$libName]['time']) / count($libs[$libName]['time']));
 					$summary['means'][] = $mean;
 					$summary['headers'][] = $libName;
 				}

@@ -11,7 +11,7 @@ class Formatters
 	/**
 	 * @link https://latte.nette.org/cs/filters#toc-bytes
 	 *
-	 * Converts to human readable file size.
+	 * Converts to human readable file size and add units
 	 * @param  int
 	 * @param  int
 	 * @return string
@@ -31,14 +31,21 @@ class Formatters
 
 
 	/**
-	 * Converts microseconds to milliseconds and add units
+	 * Converts microseconds to human readable format and add units
 	 *
 	 * @param  float $microseconds
 	 * @param  int $precision
 	 * @return string
 	 */
-	public static function milliseconds($microseconds, $precision = 4)
+	public static function seconds($microseconds, $precision = 10)
 	{
-		return round(1000 * $microseconds, $precision) . ' ms';
+		$units = array('μs', 'ms', 's');
+		foreach ($units as $unit) {
+			if (abs($microseconds) < 1000 || $unit === end($units)) {
+				break;
+			}
+			$microseconds = $microseconds / 1000;
+		}
+		return round($microseconds, $precision) . ' ' . $unit;
 	}
 }
