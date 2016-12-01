@@ -31,14 +31,15 @@ class Formatters
 
 
 	/**
-	 * Converts microseconds to human readable format and add units
+	 * Converts seconds to human readable format and add units
 	 *
-	 * @param  float $microseconds
+	 * @param  float $seconds
 	 * @param  int $precision
 	 * @return string
 	 */
-	public static function seconds($microseconds, $precision = 10)
+	public static function seconds($seconds, $precision = 10)
 	{
+		$microseconds = $seconds * 1000 * 1000;
 		$units = array('μs', 'ms', 's');
 		foreach ($units as $unit) {
 			if (abs($microseconds) < 1000 || $unit === end($units)) {
