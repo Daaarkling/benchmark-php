@@ -1,179 +1,86 @@
 {
     "repetitions": 10,
     "benchmark": {
-        "encoders": {
-            "converter": "\\Benchmark\\Converters\\ArrayConverter",
-			"formats": {
-				"native": {
-					"libs": [
-						{
-							"name": "PHP serialize",
-							"class": "\\Benchmark\\Encoders\\Native\\PhpSerializeFunction",
-							"url": "http://php.net/manual/en/function.serialize.php"
-						}
-					]
-				},
-				"json": {
-					"libs": [
-						{
-							"name": "PHP json_encode",
-							"class": "\\Benchmark\\Encoders\\Json\\PhpJsonEncodeFunction",
-							"url": "http://php.net/manual/en/function.json-encode.php"
-						},
-						{
-							"name": "webmozart/json",
-							"class": "\\Benchmark\\Encoders\\Json\\WebmozartJson",
-							"url": "https://github.com/webmozart/json",
-							"version": "1.2.2"
-						}
-					]
-				},
-				"xml": {
-					"libs": [
-						{
-							"name": "openlss/lib-array2xml",
-							"class": "\\Benchmark\\Encoders\\Xml\\OpenlssLibArray2Xml",
-							"url": "https://github.com/nullivex/lib-array2xml",
-							"version": "0.5.0"
-						},
-						{
-							"name": "spatie/array-to-xml",
-							"class": "\\Benchmark\\Encoders\\Xml\\SpatieArrayToXml",
-							"url": "https://github.com/spatie/array-to-xml",
-							"version": "2.2.0"
-						},
-						{
-							"name": "fillup/array2xml",
-							"class": "\\Benchmark\\Encoders\\Xml\\FillupArray2Xml",
-							"url": "https://github.com/fillup/array2xml",
-							"version": "0.5.1"
-						}
-					]
-				},
-				"protobuf": {
-					"converter": "\\Benchmark\\Converters\\GoogleProtobuf\\ProtobufConverter",
-					"libs": [
-						{
-							"name": "google/protobuf",
-							"class": "\\Benchmark\\Encoders\\Protobuf\\GoogleProtobuf",
-							"url": "https://github.com/google/protobuf",
-							"version": "3.1.0"
-						}
-					]
-				},
-				"msgpack": {
-					"libs": [
-						{
-							"name": "msgpack/msgpack-php",
-							"class": "\\Benchmark\\Encoders\\Msgpack\\MsgpackOfficial",
-							"url": "https://github.com/msgpack/msgpack-php",
-							"version": "2.0.1"
-						},
-						{
-							"name": "rybakit/msgpack",
-							"class": "\\Benchmark\\Encoders\\Msgpack\\RybakitMsgpack",
-							"url": "https://github.com/rybakit/msgpack.php",
-							"version": "0.2.1"
-						}
-					]
-				},
-				"avro": {
-					"libs": [
-						{
-							"name": "apache/avro",
-							"class": "\\Benchmark\\Encoders\\Avro\\AvroOfficial",
-							"url": "http://avro.apache.org/",
-							"version": "1.8.1"
-						}
-					]
-				}
+		"native": [
+			{
+				"name": "PHP serialize",
+				"class": "\\Benchmark\\Unit\\Native\\PhpUnSerializeFunction",
+				"url": "http://php.net/manual/en/function.serialize.php"
 			}
-        },
-		"decoders": {
-			"formats": {
-				"native": {
-					"converter": "\\Benchmark\\Converters\\SerializeConverter",
-					"libs": [
-						{
-							"name": "PHP unserialize",
-							"class": "\\Benchmark\\Decoders\\Native\\PhpUnserializeFunction",
-							"url": "http://php.net/manual/en/function.unserialize.php"
-						}
-					]
-				},
-				"json": {
-					"converter": "\\Benchmark\\Converters\\JsonConverter",
-					"libs": [
-						{
-							"name": "PHP json_decode",
-							"class": "\\Benchmark\\Decoders\\Json\\PhpJsonDecodeFunction",
-							"url": "http://php.net/manual/en/function.json-decode.php"
-						},
-						{
-							"name": "webmozart/json",
-							"class": "\\Benchmark\\Decoders\\Json\\WebmozartJson",
-							"url": "https://github.com/webmozart/json",
-							"version": "1.2.2"
-						}
-					]
-				},
-				"xml": {
-					"converter": "\\Benchmark\\Converters\\XmlConverter",
-					"libs": [
-						{
-							"name": "openlss/lib-array2xml",
-							"class": "\\Benchmark\\Decoders\\Xml\\OpenlssLibArray2Xml",
-							"url": "https://github.com/nullivex/lib-array2xml",
-							"version": "0.5.0"
-						},
-						{
-							"name": "traeger/SimplestXML",
-							"class": "\\Benchmark\\Decoders\\Xml\\TraegerSimplestXML",
-							"url": "https://github.com/traeger/SimplestXML",
-							"version": "r1"
-						}
-					]
-				},
-				"protobuf": {
-					"converter": "\\Benchmark\\Converters\\GoogleProtobuf\\ProtobufBinaryConverter",
-					"libs": [
-						{
-							"name": "google/protobuf",
-							"class": "\\Benchmark\\Decoders\\Protobuf\\GoogleProtobuf",
-							"url": "https://github.com/google/protobuf",
-							"version": "3.1.0"
-						}
-					]
-				},
-				"msgpack": {
-					"converter": "\\Benchmark\\Converters\\MsgpackConverter",
-					"libs": [
-						{
-							"name": "msgpack/msgpack-php",
-							"class": "\\Benchmark\\Decoders\\Msgpack\\MsgpackOfficial",
-							"url": "https://github.com/msgpack/msgpack-php",
-							"version": "2.0.1"
-						},
-						{
-							"name": "rybakit/msgpack",
-							"class": "\\Benchmark\\Decoders\\Msgpack\\RybakitMsgpack",
-							"url": "https://github.com/rybakit/msgpack.php",
-							"version": "0.2.1"
-						}
-					]
-				},
-				"avro": {
-					"converter": "\\Benchmark\\Converters\\Avro\\AvroConverter",
-					"libs": [
-						{
-							"name": "apache/avro",
-							"class": "\\Benchmark\\Decoders\\Avro\\AvroOfficial",
-							"url": "http://avro.apache.org/",
-							"version": "1.8.1"
-						}
-					]
-				}
+		],
+		"json": [
+			{
+				"name": "PHP native json",
+				"class": "\\Benchmark\\Unit\\Json\\PhpJsonFunction",
+				"url": "http://php.net/manual/en/function.json-encode.php"
+			},
+			{
+				"name": "webmozart/json",
+				"class": "\\Benchmark\\Unit\\Json\\WebmozartJson",
+				"url": "https://github.com/webmozart/json",
+				"version": "1.2.2"
 			}
-		}
+		],
+		"xml": [
+			{
+				"name": "openlss/lib-array2xml",
+				"class": "\\Benchmark\\Unit\\Xml\\OpenlssLibArray2Xml",
+				"url": "https://github.com/nullivex/lib-array2xml",
+				"version": "0.5.0"
+			},
+			{
+				"name": "spatie/array-to-xml",
+				"class": "\\Benchmark\\Unit\\Xml\\SpatieArrayToXml",
+				"url": "https://github.com/spatie/array-to-xml",
+				"version": "2.2.0"
+			},
+			{
+				"name": "fillup/array2xml",
+				"class": "\\Benchmark\\Unit\\Xml\\FillupArray2Xml",
+				"url": "https://github.com/fillup/array2xml",
+				"version": "0.5.1"
+			},
+			{
+				"name": "traeger/SimplestXML",
+				"class": "\\Benchmark\\Unit\\Xml\\TraegerSimplestXML",
+				"url": "https://github.com/traeger/SimplestXML",
+				"version": "r1"
+			}
+		],
+		"protobuf": [
+			{
+				"name": "google/protobuf",
+				"class": "\\Benchmark\\Unit\\Protobuf\\GoogleProtobuf",
+				"url": "https://github.com/google/protobuf",
+				"version": "3.1.0"
+			}
+		],
+		"msgpack": [
+			{
+				"name": "msgpack/msgpack-php",
+				"class": "\\Benchmark\\Unit\\Msgpack\\MsgpackOfficial",
+				"url": "https://github.com/msgpack/msgpack-php",
+				"version": "2.0.1"
+			},
+			{
+				"name": "rybakit/msgpack",
+				"class": "\\Benchmark\\Unit\\Msgpack\\RybakitMsgpack",
+				"url": "https://github.com/rybakit/msgpack.php",
+				"version": "0.2.1"
+			},
+			{
+				"name": "onlinecity/msgpack-php",
+				"class": "\\Benchmark\\Unit\\Msgpack\\OnlinecityMsgpack",
+				"url": "https://github.com/onlinecity/msgpack-php"
+			}
+		],
+		"avro": [
+			{
+				"name": "apache/avro",
+				"class": "\\Benchmark\\Unit\\Avro\\AvroOfficial",
+				"url": "http://avro.apache.org/",
+				"version": "1.8.1"
+			}
+		]
     }
 }

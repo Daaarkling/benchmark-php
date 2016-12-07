@@ -2,3 +2,4 @@ vendor/*
 temp/*
 .idea
 output/*
+config/testdata_huge.json

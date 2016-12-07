@@ -4,7 +4,7 @@
 namespace Benchmark\Utils;
 
 use Benchmark\Converters\IDataConverter;
-use Benchmark\IUnitBenchmark;
+use Benchmark\Unit\IUnitBenchmark;
 use JsonSchema\Validator as JValidator;
 use Nette\Utils\Json;
 
@@ -77,26 +77,10 @@ class Validator
 	 */
 	public function validateClasses()
 	{
-		foreach ($this->config->benchmark as $type) {
-
-			if (property_exists($type, 'converter')) {
-				if (!$this->isClassValid($type->converter, IDataConverter::class)) {
-					$this->addClassError($type->converter);
-				}
-			}
-
-			foreach ($type->formats as $format) {
-
-				if (property_exists($format, 'converter')) {
-					if (!$this->isClassValid($format->converter, IDataConverter::class)) {
-						$this->addClassError($format->converter);
-					}
-				}
-
-				foreach ($format->libs as $lib) {
-					if (!$this->isClassValid($lib->class, IUnitBenchmark::class)) {
-						$this->addClassError($lib->class);
-					}
+		foreach ($this->config->benchmark as $libs) {
+			foreach ($libs as $lib) {
+				if (!$this->isClassValid($lib->class, IUnitBenchmark::class)) {
+					$this->addClassError($lib->class);
 				}
 			}
 		}

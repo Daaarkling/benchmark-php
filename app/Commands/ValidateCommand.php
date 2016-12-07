@@ -54,9 +54,15 @@ class ValidateCommand extends Command
 
 		// test data
 		$testDataFileName = $input->getOption('data');
-        if ($testDataFileName !== NULL){
-		    $config->testData = $testDataFileName;
-        }
+		if ($testDataFileName !== NULL && ($realPath = realpath($testDataFileName))){
+			$config->testData = $realPath;
+		} elseif (($realPath = realpath(Validator::$testDataFile))) {
+			$config->testData = $realPath;
+		} else {
+			$io->error('Test data file was not found nor given.');
+			return 1;
+		}
+
 
 		// validation
 		$validator = new Validator($config);

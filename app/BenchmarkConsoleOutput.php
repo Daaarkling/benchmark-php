@@ -33,7 +33,7 @@ class BenchmarkConsoleOutput extends Benchmark
 	protected function handleResult($result)
 	{
 		$io = new SymfonyStyle($this->input, $this->output);
-		
+
 
 		foreach ($result as $typeName => $type) {
 
