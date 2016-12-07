@@ -1,10 +1,10 @@
 <?php
 
-namespace Benchmark\Unit\Native;
+namespace Benchmark\Units\Native;
 
 
 
-use Benchmark\Unit\AUnitBenchmark;
+use Benchmark\Units\AUnitBenchmark;
 
 class PhpUnSerializeFunction extends AUnitBenchmark
 {

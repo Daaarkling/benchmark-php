@@ -1,11 +1,11 @@
 <?php
 
-namespace Benchmark\Unit\Protobuf;
+namespace Benchmark\Units\Protobuf;
 
 
 use Benchmark\Converters\GoogleProtobuf\PersonCollection;
 use Benchmark\Converters\GoogleProtobuf\ProtobufConverter;
-use Benchmark\Unit\AUnitBenchmark;
+use Benchmark\Units\AUnitBenchmark;
 
 
 class GoogleProtobuf extends AUnitBenchmark

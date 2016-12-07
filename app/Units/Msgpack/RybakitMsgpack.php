@@ -1,9 +1,9 @@
 <?php
 
-namespace Benchmark\Unit\Msgpack;
+namespace Benchmark\Units\Msgpack;
 
 
-use Benchmark\Unit\AUnitBenchmark;
+use Benchmark\Units\AUnitBenchmark;
 use MessagePack\BufferUnpacker;
 use MessagePack\Packer;
 

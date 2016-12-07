@@ -1,9 +1,9 @@
 <?php
 
-namespace Benchmark\Unit\Xml;
+namespace Benchmark\Units\Xml;
 
 
-use Benchmark\Unit\AUnitBenchmark;
+use Benchmark\Units\AUnitBenchmark;
 use LSS\Array2XML;
 use LSS\XML2Array;
 

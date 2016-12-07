@@ -5,7 +5,7 @@ namespace Benchmark;
 
 
 use Benchmark\Converters\ArrayConverter;
-use Benchmark\Unit\IUnitBenchmark;
+use Benchmark\Units\IUnitBenchmark;
 use Benchmark\Utils\ClassHelper;
 
 abstract class Benchmark

@@ -1,9 +1,9 @@
 <?php
 
-namespace Benchmark\Unit\Json;
+namespace Benchmark\Units\Json;
 
 
-use Benchmark\Unit\AUnitBenchmark;
+use Benchmark\Units\AUnitBenchmark;
 use Webmozart\Json\JsonDecoder;
 use Webmozart\Json\JsonEncoder;
 

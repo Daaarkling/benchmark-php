@@ -1,8 +1,8 @@
 <?php
 
-namespace Benchmark\Unit\Xml;
+namespace Benchmark\Units\Xml;
 
-use Benchmark\Unit\AUnitBenchmark;
+use Benchmark\Units\AUnitBenchmark;
 use Spatie\ArrayToXml\ArrayToXml;
 
 

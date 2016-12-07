@@ -4,19 +4,19 @@
 		"native": [
 			{
 				"name": "PHP serialize",
-				"class": "\\Benchmark\\Unit\\Native\\PhpUnSerializeFunction",
+				"class": "\\Benchmark\\Units\\Native\\PhpUnSerializeFunction",
 				"url": "http://php.net/manual/en/function.serialize.php"
 			}
 		],
 		"json": [
 			{
 				"name": "PHP native json",
-				"class": "\\Benchmark\\Unit\\Json\\PhpJsonFunction",
+				"class": "\\Benchmark\\Units\\Json\\PhpJsonFunction",
 				"url": "http://php.net/manual/en/function.json-encode.php"
 			},
 			{
 				"name": "webmozart/json",
-				"class": "\\Benchmark\\Unit\\Json\\WebmozartJson",
+				"class": "\\Benchmark\\Units\\Json\\WebmozartJson",
 				"url": "https://github.com/webmozart/json",
 				"version": "1.2.2"
 			}
@@ -24,25 +24,25 @@
 		"xml": [
 			{
 				"name": "openlss/lib-array2xml",
-				"class": "\\Benchmark\\Unit\\Xml\\OpenlssLibArray2Xml",
+				"class": "\\Benchmark\\Units\\Xml\\OpenlssLibArray2Xml",
 				"url": "https://github.com/nullivex/lib-array2xml",
 				"version": "0.5.0"
 			},
 			{
 				"name": "spatie/array-to-xml",
-				"class": "\\Benchmark\\Unit\\Xml\\SpatieArrayToXml",
+				"class": "\\Benchmark\\Units\\Xml\\SpatieArrayToXml",
 				"url": "https://github.com/spatie/array-to-xml",
 				"version": "2.2.0"
 			},
 			{
 				"name": "fillup/array2xml",
-				"class": "\\Benchmark\\Unit\\Xml\\FillupArray2Xml",
+				"class": "\\Benchmark\\Units\\Xml\\FillupArray2Xml",
 				"url": "https://github.com/fillup/array2xml",
 				"version": "0.5.1"
 			},
 			{
 				"name": "traeger/SimplestXML",
-				"class": "\\Benchmark\\Unit\\Xml\\TraegerSimplestXML",
+				"class": "\\Benchmark\\Units\\Xml\\TraegerSimplestXML",
 				"url": "https://github.com/traeger/SimplestXML",
 				"version": "r1"
 			}
@@ -50,7 +50,7 @@
 		"protobuf": [
 			{
 				"name": "google/protobuf",
-				"class": "\\Benchmark\\Unit\\Protobuf\\GoogleProtobuf",
+				"class": "\\Benchmark\\Units\\Protobuf\\GoogleProtobuf",
 				"url": "https://github.com/google/protobuf",
 				"version": "3.1.0"
 			}
@@ -58,26 +58,26 @@
 		"msgpack": [
 			{
 				"name": "msgpack/msgpack-php",
-				"class": "\\Benchmark\\Unit\\Msgpack\\MsgpackOfficial",
+				"class": "\\Benchmark\\Units\\Msgpack\\MsgpackOfficial",
 				"url": "https://github.com/msgpack/msgpack-php",
 				"version": "2.0.1"
 			},
 			{
 				"name": "rybakit/msgpack",
-				"class": "\\Benchmark\\Unit\\Msgpack\\RybakitMsgpack",
+				"class": "\\Benchmark\\Units\\Msgpack\\RybakitMsgpack",
 				"url": "https://github.com/rybakit/msgpack.php",
 				"version": "0.2.1"
 			},
 			{
 				"name": "onlinecity/msgpack-php",
-				"class": "\\Benchmark\\Unit\\Msgpack\\OnlinecityMsgpack",
+				"class": "\\Benchmark\\Units\\Msgpack\\OnlinecityMsgpack",
 				"url": "https://github.com/onlinecity/msgpack-php"
 			}
 		],
 		"avro": [
 			{
 				"name": "apache/avro",
-				"class": "\\Benchmark\\Unit\\Avro\\AvroOfficial",
+				"class": "\\Benchmark\\Units\\Avro\\AvroOfficial",
 				"url": "http://avro.apache.org/",
 				"version": "1.8.1"
 			}

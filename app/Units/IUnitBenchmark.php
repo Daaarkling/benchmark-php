@@ -1,6 +1,6 @@
 <?php
 
-namespace Benchmark\Unit;
+namespace Benchmark\Units;
 
 
 interface IUnitBenchmark

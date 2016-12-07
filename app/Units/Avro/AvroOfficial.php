@@ -1,12 +1,12 @@
 <?php
 
-namespace Benchmark\Unit\Avro;
+namespace Benchmark\Units\Avro;
 
 
 use AvroDataIOReader;
 use AvroIODatumReader;
 use AvroStringIO;
-use Benchmark\Unit\AUnitBenchmark;
+use Benchmark\Units\AUnitBenchmark;
 
 
 class AvroOfficial extends AUnitBenchmark
@@ -21,7 +21,7 @@ class AvroOfficial extends AUnitBenchmark
 
 	protected function prepareBenchmark()
 	{
-		$schema = file_get_contents(__DIR__ . '/avro_schema.json');
+		$schema = file_get_contents(__DIR__ . '/../../Convertors/Avro/avro_schema.json');
 		$this->writerSchema = \AvroSchema::parse($schema);
 		$this->writer = new \AvroIODatumWriter($this->writerSchema);
 	}

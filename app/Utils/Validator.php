@@ -3,8 +3,7 @@
 
 namespace Benchmark\Utils;
 
-use Benchmark\Converters\IDataConverter;
-use Benchmark\Unit\IUnitBenchmark;
+use Benchmark\Units\IUnitBenchmark;
 use JsonSchema\Validator as JValidator;
 use Nette\Utils\Json;
 
