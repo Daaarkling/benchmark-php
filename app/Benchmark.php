@@ -4,8 +4,8 @@
 namespace Benchmark;
 
 
-
-use Benchmark\Converters\IDataConverter;
+use Benchmark\Converters\ArrayConverter;
+use Benchmark\Units\IUnitBenchmark;
 use Benchmark\Utils\ClassHelper;
 
 abstract class Benchmark
@@ -30,68 +30,34 @@ abstract class Benchmark
 	public function run()
 	{
 		$result = [];
-		$data = NULL;
+		$arrayConverter = new ArrayConverter();
+		$data = $arrayConverter->convertData($this->testData);
 		$repetitions = $this->config['repetitions'];
 
-		foreach ($this->config['benchmark'] as $typeName => $type){
+		foreach ($this->config['benchmark'] as $formatName => $libs){
+			foreach ($libs as $lib){
 
-			$dataGeneral = NULL;
-			if (key_exists('converter', $type) && $type['converter']) {
-				$converterName = $type['converter'];
-				if (!($dataConverter = ClassHelper::instantiateClass($converterName, IDataConverter::class))) {
-					continue;
-				}
-				$dataGeneral = $dataConverter->convertData($this->testData);
-			}
-
-			foreach ($type['formats'] as $formatName => $format){
-
-				$dataSpecific = NULL;
-				if (key_exists('converter', $format) && $format['converter']) {
-					$converterName = $format['converter'];
-					if (!($dataConverter = ClassHelper::instantiateClass($converterName, IDataConverter::class))) {
-						continue;
-					}
-					$dataSpecific = $dataConverter->convertData($this->testData);
-				}
-
-				if ($dataSpecific !== NULL) {
-					$data = $dataSpecific;
-				} else {
-					$data = $dataGeneral;
-				}
-
-				if (!$data) {
+				$className = $lib['class'];
+				if (!($class = ClassHelper::instantiateClass($className, IUnitBenchmark::class))) {
 					continue;
 				}
 
-				foreach ($format['libs'] as $lib){
+				// run unit benchmark
+				$unitResult = $class->run($data, $repetitions);
 
-					$className = $lib['class'];
-					if (!($class = ClassHelper::instantiateClass($className, IUnitBenchmark::class))) {
-						continue;
+				//
+				$libName = key_exists('version', $lib) ? $lib['name'] . ' ' . $lib['version'] : $lib['name'];
+				foreach ($unitResult as $type => $value) {
+					foreach ($value['time'] as $time) {
+						$result[$type][$formatName][$libName]['time'][] = $time;
 					}
-
-					$string = NULL;
-					$libName = key_exists('version', $lib) ? $lib['name'] . ' ' . $lib['version'] : $lib['name'];
-					for ($i = 1; $i <= $repetitions; $i++) {
-
-						$start = microtime(TRUE);
-						$string = $class->execute($data);
-						$time = microtime(TRUE) - $start;
-
-						$result[$typeName][$formatName][$libName]['time'][] = $time;
-					}
-
-					// size of string is always same (at least it should be), there is no need to repeat the process
-					if (is_string($string)) {
-						$size = strlen($string);
-						$result[$typeName][$formatName][$libName]['size'] = $size;
+					if (key_exists('size', $value)) {
+						$result[$type][$formatName][$libName]['size'] = $value['size'];
 					}
 				}
-
 			}
 		}
+
 		$this->handleResult($result);
 	}
 
@@ -128,7 +94,7 @@ abstract class Benchmark
 	/**
 	 * @param string $testData
 	 */
-	public function setTestData(string $testData)
+	public function setTestData($testData)
 	{
 		$this->testData = $testData;
 	}

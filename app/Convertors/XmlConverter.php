@@ -10,11 +10,10 @@ class XmlConverter implements IDataConverter
 {
 
 
-	public function convertData($jsonTestData)
+	public function convertData($arrayData)
 	{
-		$array = Json::decode($jsonTestData, Json::FORCE_ARRAY);
 		$simpleXml = new SimpleXMLElement("<?xml version=\"1.0\" encoding=\"UTF-8\"?><result></result>");
-		$this->arrayToXml($array, $simpleXml);
+		$this->arrayToXml($arrayData, $simpleXml);
 		return $simpleXml->asXML();
 	}
 

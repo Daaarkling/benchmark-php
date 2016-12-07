@@ -13,10 +13,8 @@ class ProtobufConverter implements IDataConverter
 {
 
 
-	public function convertData($jsonTestData)
+	public function convertData($arrayData)
 	{
-		$arrayData = Json::decode($jsonTestData, Json::FORCE_ARRAY);
-
 		$personCollection = new PersonCollection();
 		$persons = new RepeatedField(GPBType::MESSAGE, Person::class);
 
