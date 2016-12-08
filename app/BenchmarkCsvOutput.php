@@ -1,10 +1,9 @@
 <?php
 
-
 namespace Benchmark;
 
-
-
+use DateTime;
+use DateTimeZone;
 use League\Csv\Writer;
 use Nette\Utils\Strings;
 
@@ -12,84 +11,57 @@ use Nette\Utils\Strings;
 class BenchmarkCsvOutput extends Benchmark
 {
 
+	/** @var string */
+	public static $fileName = 'php-output';
+
+	/** @var string */
+	public static $timeFormat = 'Y-m-d-H-i-s';
+
+
+
 	protected function handleResult($result)
 	{
 		foreach ($result as $typeName => $type) {
 
-			$summary['headers'] = [];
-			$summary['means'] = [];
-			$summary['sizes'] = [];
-
-			foreach ($type as $formatName => $libs) {
-
-				// if there are no libs continue
-				if (empty($libs)) {
-					continue;
-				}
-
-				// rearrange data
-				$headers = array_keys($libs);
-				$rows = [];
-				for ($j = 0; $j < count($libs[$headers[0]]['time']); $j++) {
-					$row = [];
-					foreach ($headers as $libName) {
-						$row[] = $libs[$libName]['time'][$j];
-					}
-					$rows[] = $row;
-				}
-
-				// create csv
-				$fileName = __DIR__ . '/../output/' . Strings::webalize($typeName . '-' . $formatName . '-time') . '.csv';
-				$this->writeCsv($fileName, $headers, $rows);
-
-
-				// compute means
-				$means = [];
-				foreach ($headers as $libName) {
-					$means[] = $mean = array_sum($libs[$libName]['time']) / count($libs[$libName]['time']);
-					$summary['means'][] = $mean;
-					$summary['headers'][] = $libName;
-				}
-
-
-				// same for sizes
-				if (key_exists('size', $libs[$headers[0]])) {
-					$headers = array_keys($libs);
-					$rows = [];
-					$row = [];
-					foreach ($headers as $libName) {
-						$row[] = $size = $libs[$libName]['size'];
-						$summary['sizes'][] = $size;
-					}
-					$rows[] = $row;
-
-					// create csv
-					$fileName = __DIR__ . '/../output/' . Strings::webalize($typeName . '-' . $formatName . '-size') . '.csv';
-					$this->writeCsv($fileName, $headers, $rows);
-				}
-			}
-
-			// summary
+			$headersTable = [];
+			$headers = [];
 			$rows = [];
-			if (empty($summary['sizes'])) {
-				$rows[] = $summary['means'];
-			} else{
-				$rows[] = $summary['means'];
-				$rows[] = $summary['sizes'];
+
+			// headers
+			foreach ($type as $libName => $lib) {
+				$headersTable[] = $lib['format'] . ' - ' . $libName;
+				$headers[] = $libName;
 			}
+
+
+			// time
+			for ($j = 0; $j < count($type[$headers[0]]['time']); $j++) {
+				$row = [];
+				foreach ($headers as $libName) {
+					$row[] = $type[$libName]['time'][$j];
+				}
+				$rows[] = $row;
+			}
+
+
+			// sizes
+			if (key_exists('size', $type[$headers[0]])) {
+				$row = [];
+				foreach ($headers as $libName) {
+					$row[] = $type[$libName]['size'];
+				}
+				$rows[] = $row;
+			}
+
 
 			// create csv
-			$fileName = __DIR__ . '/../output/' . Strings::webalize($typeName . '-summary') . '.csv';
-			$this->writeCsv($fileName, $summary['headers'], $rows);
+			$time = (new DateTime('now', new DateTimeZone('Europe/Prague')))->format(self::$timeFormat);
+			$fileName = __DIR__ . '/../output/' . self::$fileName . '-' . Strings::webalize($typeName) . '-' . $time . '.csv';
+
+			$csv = Writer::createFromPath($fileName, 'w');
+			$csv->setDelimiter(';');
+			$csv->insertOne($headersTable);
+			$csv->insertAll($rows);
 		}
-	}
-
-
-	private function writeCsv($fileName, $headers, $rows)
-	{
-		$csv = Writer::createFromPath($fileName, 'w');
-		$csv->setDelimiter(';');
-		$csv->insertOne($headers);
-		$csv->insertAll($rows);
 	}
 }

@@ -46,11 +46,12 @@ abstract class Benchmark
 				$libName = key_exists('version', $lib) ? $lib['name'] . ' ' . $lib['version'] : $lib['name'];
 				foreach ($unitResult as $type => $value) {
 					foreach ($value['time'] as $time) {
-						$result[$type][$formatName][$libName]['time'][] = $time;
+						$result[$type][$libName]['time'][] = $time;
 					}
 					if (key_exists('size', $value)) {
-						$result[$type][$formatName][$libName]['size'] = $value['size'];
+						$result[$type][$libName]['size'] = $value['size'];
 					}
+					$result[$type][$libName]['format'] = $formatName;
 				}
 			}
 		}

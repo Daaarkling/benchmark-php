@@ -4,13 +4,20 @@
 namespace Benchmark;
 
 
+use DateTime;
+use DateTimeZone;
 use Nette\Utils\FileSystem;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
 
 class BenchmarkFileOutput extends BenchmarkConsoleOutput
 {
-	public static $fileName = 'output.txt';
+	/** @var string */
+	public static $fileName = 'php-output';
+
+	/** @var string */
+	public static $timeFormat = 'Y-m-d-H-i-s';
+
 
 	/** @var BufferedOutput */
 	protected $output;
@@ -26,6 +33,9 @@ class BenchmarkFileOutput extends BenchmarkConsoleOutput
 	{
 		parent::handleResult($result);
 
-		FileSystem::write(__DIR__ . '/../output/' . self::$fileName, $this->output->fetch());
+		$time = (new DateTime('now', new DateTimeZone('Europe/Prague')))->format(self::$timeFormat);
+		$name = __DIR__ . '/../output/' . self::$fileName . '-' . $time . '.txt';
+
+		FileSystem::write($name, $this->output->fetch());
 	}
 }
