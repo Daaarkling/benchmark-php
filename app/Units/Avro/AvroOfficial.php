@@ -4,6 +4,7 @@ namespace Benchmark\Units\Avro;
 
 
 use AvroDataIOReader;
+use AvroDataIOWriter;
 use AvroIODatumReader;
 use AvroStringIO;
 use Benchmark\Units\AUnitBenchmark;
@@ -12,29 +13,26 @@ use Benchmark\Units\AUnitBenchmark;
 class AvroOfficial extends AUnitBenchmark
 {
 
-	/** @var \AvroSchema  */
-	private $writerSchema;
-
-	/** @var \AvroIODatumWriter  */
-	private $writer;
-
-
-	protected function prepareBenchmark()
-	{
-		$schema = file_get_contents(__DIR__ . '/../../Convertors/Avro/avro_schema.json');
-		$this->writerSchema = \AvroSchema::parse($schema);
-		$this->writer = new \AvroIODatumWriter($this->writerSchema);
-	}
-
 
 
 	public function encode($data)
 	{
-		$io = new \AvroStringIO();
-		$dataWriter = new \AvroDataIOWriter($io, $this->writer, $this->writerSchema);
+		$schema = file_get_contents(__DIR__ . '/../../Convertors/Avro/avro_schema.json');
+		$writerSchema = \AvroSchema::parse($schema);
+		$writer = new \AvroIODatumWriter($writerSchema);
+		$io = new AvroStringIO();
+		$dataWriter = new AvroDataIOWriter($io, $writer, $writerSchema);
+
+		$start = microtime(TRUE);
 		$dataWriter->append($data);
 		$dataWriter->close();
-		return $io->string();
+		$string = $io->string();
+		$time = microtime(TRUE) - $start;
+
+		return [
+			'time' => $time,
+			'string' => $string
+		];
 	}
 
 
@@ -42,8 +40,13 @@ class AvroOfficial extends AUnitBenchmark
 	public function decode($data)
 	{
 		$readIO = new AvroStringIO($data);
+
+		$start = microtime(TRUE);
 		$dataReader = new AvroDataIOReader($readIO, new AvroIODatumReader());
 		$data = $dataReader->data();
+		$time = microtime(TRUE) - $start;
+
+		return $time;
 	}
 
 
