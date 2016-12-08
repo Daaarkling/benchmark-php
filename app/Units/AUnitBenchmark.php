@@ -10,15 +10,19 @@ abstract class AUnitBenchmark implements IUnitBenchmark
 	/** @var  mixed */
 	protected $data;
 
+	/** @var  string */
+	protected $dataFile;
+
 
 
 	/**
 	 * @param mixed $data
+	 * @param string $dataFile
 	 * @param int $repetitions
 	 * @return array
 	 * @throws InvalidArgumentException
 	 */
-	public function run($data, $repetitions = 10)
+	public function run($data, $dataFile, $repetitions = 10)
 	{
 		if ($repetitions < 1) {
 			throw new InvalidArgumentException('Number of repetitions must be greater then 0.');
@@ -26,23 +30,25 @@ abstract class AUnitBenchmark implements IUnitBenchmark
 
 		$result = [];
 		$this->data = $data;
-		$encodedData = FALSE;
+		$this->dataFile = $dataFile;
 		$this->prepareBenchmark();
 		$data = $this->prepareDataForEncode();
+		$output = NULL;
 
 		for ($i = 1; $i <= $repetitions; $i++) {
 			$start = microtime(TRUE);
-			$encodedData = $this->encode($data);
+			$output = $this->encode($data);
 			$time = microtime(TRUE) - $start;
 
-			if ($encodedData === FALSE) {
+			if ($output === FALSE) {
 				break;
 			}
-			$result['encode']['time'][] = $time;
+			$result['encode']['time'][] = is_array($output) ? $output['time'] : $time;
 		}
 
 		// size of string is always same (at least it should be), there is no need to repeat the process
-		if (is_string($encodedData)) {
+		if (is_string($output) || is_array($output)) {
+			$encodedData = is_array($output) ? $output['string'] : $output;
 			$size = strlen($encodedData);
 			$result['encode']['size'] = $size;
 		} else {
@@ -52,6 +58,7 @@ abstract class AUnitBenchmark implements IUnitBenchmark
 			}
 		}
 
+		$output = NULL;
 		for ($i = 1; $i <= $repetitions; $i++) {
 			$start = microtime(TRUE);
 			$output = $this->decode($encodedData);
@@ -60,13 +67,16 @@ abstract class AUnitBenchmark implements IUnitBenchmark
 			if ($output === FALSE) {
 				break;
 			}
-			$result['decode']['time'][] = $time;
+			$result['decode']['time'][] = is_float($output) ? $output : $time;
 		}
 
 		return $result;
 	}
 
 
+	/**
+	 * Its called once before encode()
+	 */
 	protected function prepareBenchmark()
 	{
 
@@ -83,6 +93,8 @@ abstract class AUnitBenchmark implements IUnitBenchmark
 
 
 	/**
+	 * If encode returns void this method must return string, otherwise decode() wont proceed
+	 *
 	 * @return mixed
 	 */
 	protected function prepareDataForDecode()

@@ -13,14 +13,11 @@ abstract class Benchmark
 	/** @var array */
 	protected $config;
 
-	/** @var string */
-	protected $testData;
 
 
 	public function __construct(array $config)
 	{
 		$this->config = $config;
-		$this->testData = file_get_contents($config['testData']);
 	}
 
 
@@ -30,8 +27,8 @@ abstract class Benchmark
 	public function run()
 	{
 		$result = [];
-		$arrayConverter = new ArrayConverter();
-		$data = $arrayConverter->convertData($this->testData);
+		$data = $this->prepareData();
+		$dataFile = $this->config['testData'];
 		$repetitions = $this->config['repetitions'];
 
 		foreach ($this->config['benchmark'] as $formatName => $libs){
@@ -43,9 +40,9 @@ abstract class Benchmark
 				}
 
 				// run unit benchmark
-				$unitResult = $class->run($data, $repetitions);
+				$unitResult = $class->run($data, $dataFile, $repetitions);
 
-				//
+				// rearrange result
 				$libName = key_exists('version', $lib) ? $lib['name'] . ' ' . $lib['version'] : $lib['name'];
 				foreach ($unitResult as $type => $value) {
 					foreach ($value['time'] as $time) {
@@ -65,6 +62,13 @@ abstract class Benchmark
 	protected abstract function handleResult($result);
 
 
+
+	protected function prepareData()
+	{
+		$arrayConverter = new ArrayConverter();
+		$data = $arrayConverter->convertData(file_get_contents($this->config['testData']));
+		return $data;
+	}
 
 
 	/**
