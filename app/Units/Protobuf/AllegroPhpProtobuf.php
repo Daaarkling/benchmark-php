@@ -3,12 +3,12 @@
 namespace Benchmark\Units\Protobuf;
 
 
-use Benchmark\Converters\GoogleProtobuf\PersonCollection;
-use Benchmark\Converters\GoogleProtobuf\ProtobufConverter;
+use Benchmark\Converters\AllegroPhpProtobuf\PersonCollection;
+use Benchmark\Converters\AllegroPhpProtobuf\ProtobufConverter;
 use Benchmark\Units\AUnitBenchmark;
 
 
-class GoogleProtobuf extends AUnitBenchmark
+class AllegroPhpProtobuf extends AUnitBenchmark
 {
 	/** @var  PersonCollection */
 	private $personCollection;
@@ -28,12 +28,16 @@ class GoogleProtobuf extends AUnitBenchmark
 
 	public function encode($data)
 	{
-		return $data->encode();
+		return $data->serializeToString();
 	}
 
 
 	public function decode($data)
 	{
-		$this->personCollection->decode($data);
+		try {
+			$this->personCollection->parseFromString($data);
+		} catch (\Exception $ex){
+			return FALSE;		
+		}		
 	}
 }
