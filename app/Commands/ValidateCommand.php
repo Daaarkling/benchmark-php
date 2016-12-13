@@ -71,7 +71,7 @@ class ValidateCommand extends Command
 
 		// ok
 		if ($validator->isValid()) {
-			$io->title('Validation passed!');
+			$io->title('Validation succeeded!');
 			return 0;
 		}
 
