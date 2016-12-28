@@ -30,6 +30,7 @@ abstract class Benchmark
 		$data = $this->prepareData();
 		$dataFile = $this->config['testData'];
 		$repetitions = $this->config['repetitions'];
+		$method = $this->config['method'];
 
 		foreach ($this->config['benchmark'] as $formatName => $libs){
 			foreach ($libs as $lib){
@@ -40,7 +41,7 @@ abstract class Benchmark
 				}
 
 				// run unit benchmark
-				$unitResult = $class->run($data, $dataFile, $repetitions);
+				$unitResult = $class->run($data, $dataFile, $repetitions, $method);
 
 				// rearrange result
 				$libName = key_exists('version', $lib) ? $lib['name'] . ' ' . $lib['version'] : $lib['name'];

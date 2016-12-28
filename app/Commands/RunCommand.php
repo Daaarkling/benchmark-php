@@ -7,6 +7,7 @@ use Benchmark\BenchmarkConsoleOutput;
 use Benchmark\BenchmarkCsvOutput;
 use Benchmark\BenchmarkDumpOutput;
 use Benchmark\BenchmarkFileOutput;
+use Benchmark\Units\IUnitBenchmark;
 use Benchmark\Utils\Validator;
 use Nette\Utils\Json;
 use Symfony\Component\Console\Command\Command;
@@ -25,6 +26,10 @@ class RunCommand extends Command
 	const OUTPUT_DUMP = 'dump';
 	const OUTPUTS = [self::OUTPUT_FILE, self::OUTPUT_CSV, self::OUTPUT_CONSOLE, self::OUTPUT_DUMP];
 
+	const METHOD_INNER = 'inner';
+	const METHOD_OUTER = 'outer';
+	const METHODS = [self::METHOD_INNER, self::METHOD_OUTER];
+
 
 
 	protected function configure()
@@ -35,7 +40,8 @@ class RunCommand extends Command
 			->addOption('config', 'c', InputOption::VALUE_REQUIRED, 'Set config file.')
 			->addOption('data', 'd', InputOption::VALUE_REQUIRED, 'Set test data.')
 			->addOption('repetitions', 'r', InputOption::VALUE_REQUIRED, 'Set number of repetitions')
-			->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'Set output. You can choose from several choices: ' . implode(', ', self::OUTPUTS) . '.', 'console');
+			->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'Set output. You can choose from several choices: ' . implode(', ', self::OUTPUTS) . '.', 'console')
+			->addOption('method', 'm', InputOption::VALUE_REQUIRED, 'Set method. You can choose from two choices: ' . implode(', ', self::OUTPUTS) . '.', self::METHOD_INNER);
 	}
 
 
@@ -73,6 +79,16 @@ class RunCommand extends Command
 		$repetitions = $input->getOption('repetitions');
 		if ($repetitions !== NULL) {
 			$config['repetitions'] = (int) $repetitions;
+		}
+
+
+		// method
+		$method = $input->getOption('method');
+		if (in_array($method, self::METHODS)) {
+			$config['method'] = (int) ($method === self::METHOD_INNER ? IUnitBenchmark::METHOD_INNER : IUnitBenchmark::METHOD_OUTER);
+		} else {
+			$io->error('Method must be one of these options: ' . implode(', ', self::METHODS));
+			return 1;
 		}
 
 

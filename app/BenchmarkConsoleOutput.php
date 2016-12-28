@@ -66,8 +66,12 @@ class BenchmarkConsoleOutput extends Benchmark
 			foreach ($headers as $libName) {
 				$means[] = Formatters::seconds(array_sum($type[$libName]['time']) / count($type[$libName]['time']));
 			}
-			$rows[] = new TableSeparator();
-			$rows[] = $means;
+			// only if there is more then two rows
+			if ($means !== $row) {
+				$rows[] = new TableSeparator();
+				$rows[] = $means;
+			}
+
 
 
 			// sizes

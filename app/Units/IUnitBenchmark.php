@@ -5,15 +5,20 @@ namespace Benchmark\Units;
 
 interface IUnitBenchmark
 {
+	const METHOD_OUTER = 0;
+	const METHOD_INNER = 1;
+
+
 	/**
 	 * Method for run the benchmark, should execute encode() and decode() methods and deliver result
 	 *
 	 * @param mixed $data
 	 * @param string $dataFile
 	 * @param int $repetitions
+	 * @param int $method
 	 * @return array
 	 */
-	public function run($data, $dataFile, $repetitions = 10);
+	public function run($data, $dataFile, $repetitions = 10, $method = self::METHOD_INNER);
 
 
 	/**
