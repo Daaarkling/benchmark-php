@@ -3,6 +3,7 @@
 namespace Benchmark\Units;
 
 
+use Benchmark\Config;
 use InvalidArgumentException;
 
 abstract class AUnitBenchmark implements IUnitBenchmark
@@ -19,10 +20,10 @@ abstract class AUnitBenchmark implements IUnitBenchmark
 	 * @param mixed $data
 	 * @param string $dataFile
 	 * @param int $repetitions
-	 * @param int $method
+	 * @param string $mode
 	 * @return array
 	 */
-	public function run($data, $dataFile, $repetitions = 10, $method = self::METHOD_INNER)
+	public function run($data, $dataFile, $repetitions = 10, $mode = Config::MODE_OUTER)
 	{
 		if ($repetitions < 1) {
 			throw new InvalidArgumentException('Number of repetitions must be greater then 0.');
@@ -31,7 +32,7 @@ abstract class AUnitBenchmark implements IUnitBenchmark
 		$this->data = $data;
 		$this->dataFile = $dataFile;
 
-		if ($method === self::METHOD_OUTER) {
+		if ($mode === Config::MODE_OUTER) {
 			return $this->runOuter($repetitions);
 		}
 		return $this->runInner($repetitions);

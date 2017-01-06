@@ -21,7 +21,7 @@ class BenchmarkConsoleOutput extends Benchmark
 
 	
 	
-	public function __construct(array $config, InputInterface $input, OutputInterface $output)
+	public function __construct(Config $config, InputInterface $input, OutputInterface $output)
 	{
 		parent::__construct($config);
 		

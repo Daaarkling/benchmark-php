@@ -3,27 +3,19 @@
 
 namespace Benchmark\Utils;
 
+use Benchmark\Config;
 use Benchmark\Units\IUnitBenchmark;
 use JsonSchema\Validator as JValidator;
 use Nette\Utils\Json;
 
 
 
-class Validator
+class ConfigValidator
 {
-	/** @var string */
-	public static $configFile = __DIR__ . '/../../config/config.json';
-
-	/** @var string */
-	public static $schemaFile = __DIR__ . '/../../config/schema.json';
-
-	/** @var string */
-	public static $testDataFile = __DIR__ . '/../../config/testdata.json';
-
 	/** @var array */
 	private $errors = [];
 
-	/** @var object */
+	/** @var Config */
 	private $config;
 
 	/** @var  JValidator */
@@ -31,7 +23,7 @@ class Validator
 
 
 
-	public function __construct($config)
+	public function __construct(Config $config)
 	{
 		$this->setConfig($config);
 		$this->schemaValidator = new JValidator();
@@ -49,7 +41,9 @@ class Validator
 		$this->validateConfig();
 
 		// there is no point to continue if config is not valid against the schema
-		if (!$this->hasErrors()) {
+		if($this->isValid()) {
+			$this->validateRepetitions();
+			$this->validateMode();
 			$this->validateClasses();
 			$this->validateTestData();
 		}
@@ -61,7 +55,16 @@ class Validator
 	 */
 	public function validateConfig()
 	{
-		$schema = Json::decode(file_get_contents(self::$schemaFile));
+		$schemaContent = @file_get_contents(Config::$schemaFile);
+		if($schemaContent === FALSE) {
+			$this->errors['File not found'][] = [
+				'property' => Config::$schemaFile,
+				'message' => 'Schema file not found.'
+			];
+			return;
+		}
+
+		$schema = Json::decode($schemaContent);
 
 		$this->schemaValidator->check($this->config, $schema);
 
@@ -71,12 +74,38 @@ class Validator
 	}
 
 
+
+	public function validateRepetitions() {
+
+		$repetitions = $this->config->getRepetitions();
+		if (!is_numeric($repetitions) || $repetitions < 1){
+			$this->errors['repetitions'][] = [
+				'property' => 'repetitions',
+				'message' => 'Repetitions must be whole number greater than one.'
+			];
+		}
+	}
+
+
+	public function validateMode() {
+
+		$mode = $this->config->getMode();
+		if (!in_array($mode, Config::MODES)){
+			$this->errors['mode'][] = [
+				'property' => 'mode',
+				'message' => 'Method must be one of these options: ' . implode(', ', Config::MODES)
+			];
+		}
+	}
+
+
+
 	/**
 	 * Check existence of classes and converters
 	 */
 	public function validateClasses()
 	{
-		foreach ($this->config->benchmark as $libs) {
+		foreach ($this->config->getConfigNode() as $libs) {
 			foreach ($libs as $lib) {
 				if (!$this->isClassValid($lib->class, IUnitBenchmark::class)) {
 					$this->addClassError($lib->class);
@@ -113,8 +142,8 @@ class Validator
 	 */
 	public function validateTestData()
 	{
-		$testDataFileName = $this->config->testData;
-		if (!(realpath($testDataFileName) || realpath(self::$testDataFile))){
+		$testDataFileName = $this->config->getTestData();
+		if (!(realpath($testDataFileName) || realpath(Config::$testDataFile))){
 			$this->errors['testData'][] = [
 				'property' => 'testData',
 				'message' => 'Test data file was not found.'
@@ -150,7 +179,7 @@ class Validator
 
 
 	/**
-	 * @return object
+	 * @return Config
 	 */
 	public function getConfig()
 	{
@@ -158,7 +187,7 @@ class Validator
 	}
 
 	/**
-	 * @param object $config
+	 * @param Config $config
 	 */
 	public function setConfig($config)
 	{

@@ -23,7 +23,7 @@ class BenchmarkFileOutput extends BenchmarkConsoleOutput
 	protected $output;
 
 
-	public function __construct(array $config, InputInterface $input, BufferedOutput $output)
+	public function __construct(Config $config, InputInterface $input, BufferedOutput $output)
 	{
 		parent::__construct($config, $input, $output);
 	}

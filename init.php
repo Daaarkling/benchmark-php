@@ -25,5 +25,4 @@ $converter->convertData(file_get_contents(__DIR__ . '/config/testdata.json'));
 
 $app = new Application();
 $app->add(new RunCommand());
-$app->add(new ValidateCommand());
 $app->run();

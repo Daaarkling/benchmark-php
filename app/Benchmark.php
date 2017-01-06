@@ -10,12 +10,12 @@ use Benchmark\Utils\ClassHelper;
 
 abstract class Benchmark
 {
-	/** @var array */
+	/** @var Config */
 	protected $config;
 
 
 
-	public function __construct(array $config)
+	public function __construct(Config $config)
 	{
 		$this->config = $config;
 	}
@@ -28,23 +28,23 @@ abstract class Benchmark
 	{
 		$result = [];
 		$data = $this->prepareData();
-		$dataFile = $this->config['testData'];
-		$repetitions = $this->config['repetitions'];
-		$method = $this->config['method'];
+		$dataFile = $this->config->getTestData();
+		$repetitions = $this->config->getRepetitions();
+		$mode = $this->config->getMode();
 
-		foreach ($this->config['benchmark'] as $formatName => $libs){
+		foreach ($this->config->getConfigNode() as $formatName => $libs){
 			foreach ($libs as $lib){
 
-				$className = $lib['class'];
+				$className = $lib->class;
 				if (!($class = ClassHelper::instantiateClass($className, IUnitBenchmark::class))) {
 					continue;
 				}
 
 				// run unit benchmark
-				$unitResult = $class->run($data, $dataFile, $repetitions, $method);
+				$unitResult = $class->run($data, $dataFile, $repetitions, $mode);
 
 				// rearrange result
-				$libName = key_exists('version', $lib) ? $lib['name'] . ' ' . $lib['version'] : $lib['name'];
+				$libName = property_exists($lib, 'version') ? $lib->name . ' ' . $lib->version : $lib->name;
 				foreach ($unitResult as $type => $value) {
 					foreach ($value['time'] as $time) {
 						$result[$type][$libName]['time'][] = $time;
@@ -68,13 +68,13 @@ abstract class Benchmark
 	protected function prepareData()
 	{
 		$arrayConverter = new ArrayConverter();
-		$data = $arrayConverter->convertData(file_get_contents($this->config['testData']));
+		$data = $arrayConverter->convertData(file_get_contents($this->config->getTestData()));
 		return $data;
 	}
 
 
 	/**
-	 * @return array
+	 * @return Config
 	 */
 	public function getConfig()
 	{
@@ -82,29 +82,12 @@ abstract class Benchmark
 	}
 
 	/**
-	 * @param array $config
+	 * @param Config $config
 	 */
-	public function setConfig(array $config)
+	public function setConfig($config)
 	{
 		$this->config = $config;
 	}
-
-	/**
-	 * @return string
-	 */
-	public function getTestData()
-	{
-		return $this->testData;
-	}
-
-	/**
-	 * @param string $testData
-	 */
-	public function setTestData($testData)
-	{
-		$this->testData = $testData;
-	}
-
 
 
 }

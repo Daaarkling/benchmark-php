@@ -7,8 +7,8 @@ use Benchmark\BenchmarkConsoleOutput;
 use Benchmark\BenchmarkCsvOutput;
 use Benchmark\BenchmarkDumpOutput;
 use Benchmark\BenchmarkFileOutput;
-use Benchmark\Units\IUnitBenchmark;
-use Benchmark\Utils\Validator;
+use Benchmark\Config;
+use Benchmark\Utils\ConfigValidator;
 use Nette\Utils\Json;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -26,9 +26,8 @@ class RunCommand extends Command
 	const OUTPUT_DUMP = 'dump';
 	const OUTPUTS = [self::OUTPUT_FILE, self::OUTPUT_CSV, self::OUTPUT_CONSOLE, self::OUTPUT_DUMP];
 
-	const METHOD_INNER = 'inner';
-	const METHOD_OUTER = 'outer';
-	const METHODS = [self::METHOD_INNER, self::METHOD_OUTER];
+
+
 
 
 
@@ -41,7 +40,7 @@ class RunCommand extends Command
 			->addOption('data', 'd', InputOption::VALUE_REQUIRED, 'Set test data.')
 			->addOption('repetitions', 'r', InputOption::VALUE_REQUIRED, 'Set number of repetitions')
 			->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'Set output. You can choose from several choices: ' . implode(', ', self::OUTPUTS) . '.', 'console')
-			->addOption('method', 'm', InputOption::VALUE_REQUIRED, 'Set method. You can choose from two choices: ' . implode(', ', self::OUTPUTS) . '.', self::METHOD_INNER);
+			->addOption('mode', 'm', InputOption::VALUE_REQUIRED, 'Set method. You can choose from two choices: ' . implode(', ', self::OUTPUTS) . '.', Config::MODE_INNER);
 	}
 
 
@@ -51,46 +50,28 @@ class RunCommand extends Command
 		$io = new SymfonyStyle($input, $output);
 
 		// config
-		$configGiven = $input->getOption('config');
-		if ($configGiven !== NULL && ($configReal = realpath($configGiven))) {
+		$configFile = $input->getOption('config');
+		if ($configFile !== NULL && ($configReal = realpath($configFile))) {
 			$configFile = $configReal;
-		} elseif (($configReal = realpath(Validator::$configFile))) {
+		} elseif (($configReal = realpath(Config::$configFile))) {
 			$configFile = $configReal;
-		} else {
-			$io->error('Config file was not found nor given.');
-			return 1;
 		}
-		$config = Json::decode(file_get_contents($configFile), Json::FORCE_ARRAY);
+		$configNode = Json::decode(file_get_contents($configFile));
 
 
 		// test data
-		$testDataFileName = $input->getOption('data');
-		if ($testDataFileName !== NULL && ($realPath = realpath($testDataFileName))){
-			$config['testData'] = $realPath;
-		} elseif (($realPath = realpath(Validator::$testDataFile))) {
-			$config['testData'] = $realPath;
-		} else {
-			$io->error('Test data file was not found nor given.');
-			return 1;
+		$testData = $input->getOption('data');
+		if ($testData !== NULL && ($realPath = realpath($testData))){
+			$testData = $realPath;
+		} elseif (($realPath = realpath(Config::$testDataFile))) {
+			$testData = $realPath;
 		}
-
 
 		// repetitions
 		$repetitions = $input->getOption('repetitions');
-		if ($repetitions !== NULL) {
-			$config['repetitions'] = (int) $repetitions;
-		}
 
-
-		// method
-		$method = $input->getOption('method');
-		if (in_array($method, self::METHODS)) {
-			$config['method'] = (int) ($method === self::METHOD_INNER ? IUnitBenchmark::METHOD_INNER : IUnitBenchmark::METHOD_OUTER);
-		} else {
-			$io->error('Method must be one of these options: ' . implode(', ', self::METHODS));
-			return 1;
-		}
-
+		// mode
+		$mode = $input->getOption('mode');
 
 		// output
 		$outputOption = $input->getOption('output');
@@ -100,19 +81,16 @@ class RunCommand extends Command
 		}
 
 
-		// run validation command
-		$validateCommand = $this->getApplication()->find('benchmark:valid');
-		$arguments = [
-			'command' => 'benchmark:valid',
-			'--config' => $configFile,
-			'--data' => $config['testData'],
-			'--repetitions' => $config['repetitions'],
-		];
+		$config = new Config($configNode, $testData, $repetitions, $mode);
 
-		$returnCode = $validateCommand->run(new ArrayInput($arguments), $output);
+		// validation
+		$validator = new ConfigValidator($config);
+		$validator->validate();
 
 		// validation is OK
-		if ($returnCode === 0) {
+		if ($validator->isValid()) {
+
+			$io->title('Validation succeeded!');
 
 			if ($outputOption === self::OUTPUT_FILE) {
 				$bufferedOutput = new BufferedOutput();
@@ -129,9 +107,21 @@ class RunCommand extends Command
 			}
 
 			$benchmark->run();
+
 			$io->title('Benchmark processed successfully!');
-			return $returnCode;
+			return 0;
+
+		} else {
+
+			// errors
+			foreach ($validator->getErrors() as $type => $errors) {
+				$io->section($type);
+				foreach ($errors as $error) {
+					$io->error(sprintf("'%s' %s", $error['property'], $error['message']));
+				}
+			}
+			$io->text('Config contains errors!');
+			return 1;
 		}
-		return 1;
 	}
 }
