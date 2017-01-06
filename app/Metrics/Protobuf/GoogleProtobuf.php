@@ -1,14 +1,14 @@
 <?php
 
-namespace Benchmark\Units\Protobuf;
+namespace Benchmark\Metrics\Protobuf;
 
 
 use Benchmark\Converters\GoogleProtobuf\PersonCollection;
 use Benchmark\Converters\GoogleProtobuf\ProtobufConverter;
-use Benchmark\Units\AUnitBenchmark;
+use Benchmark\Metrics\AMetric;
 
 
-class GoogleProtobuf extends AUnitBenchmark
+class GoogleProtobuf extends AMetric
 {
 	/** @var  PersonCollection */
 	private $personCollection;

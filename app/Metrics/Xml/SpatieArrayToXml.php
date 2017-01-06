@@ -1,12 +1,12 @@
 <?php
 
-namespace Benchmark\Units\Xml;
+namespace Benchmark\Metrics\Xml;
 
-use Benchmark\Units\AUnitBenchmark;
+use Benchmark\Metrics\AMetric;
 use Spatie\ArrayToXml\ArrayToXml;
 
 
-class SpatieArrayToXml extends AUnitBenchmark
+class SpatieArrayToXml extends AMetric
 {
 
 	public function encode($data)

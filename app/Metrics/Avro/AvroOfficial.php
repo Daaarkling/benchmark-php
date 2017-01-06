@@ -1,16 +1,16 @@
 <?php
 
-namespace Benchmark\Units\Avro;
+namespace Benchmark\Metrics\Avro;
 
 
 use AvroDataIOReader;
 use AvroDataIOWriter;
 use AvroIODatumReader;
 use AvroStringIO;
-use Benchmark\Units\AUnitBenchmark;
+use Benchmark\Metrics\AMetric;
 
 
-class AvroOfficial extends AUnitBenchmark
+class AvroOfficial extends AMetric
 {
 
 

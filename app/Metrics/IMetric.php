@@ -1,11 +1,11 @@
 <?php
 
-namespace Benchmark\Units;
+namespace Benchmark\Metrics;
 
 
 use Benchmark\Config;
 
-interface IUnitBenchmark
+interface IMetric
 {
 	/**
 	 * Method for run the benchmark, should execute encode() and decode() methods and deliver result

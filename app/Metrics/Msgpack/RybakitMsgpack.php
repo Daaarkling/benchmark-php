@@ -1,14 +1,14 @@
 <?php
 
-namespace Benchmark\Units\Msgpack;
+namespace Benchmark\Metrics\Msgpack;
 
 
-use Benchmark\Units\AUnitBenchmark;
+use Benchmark\Metrics\AMetric;
 use MessagePack\BufferUnpacker;
 use MessagePack\Packer;
 
 
-class RybakitMsgpack extends AUnitBenchmark
+class RybakitMsgpack extends AMetric
 {
 	/** @var BufferUnpacker */
     private $bufferUnpacker;

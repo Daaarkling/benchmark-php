@@ -1,13 +1,13 @@
 <?php
 
-namespace Benchmark\Units\Xml;
+namespace Benchmark\Metrics\Xml;
 
 
-use Benchmark\Units\AUnitBenchmark;
+use Benchmark\Metrics\AMetric;
 use fillup\A2X;
 
 
-class FillupArray2Xml extends AUnitBenchmark
+class FillupArray2Xml extends AMetric
 {
 
 	public function encode($data)

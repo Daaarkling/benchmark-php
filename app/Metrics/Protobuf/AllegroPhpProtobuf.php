@@ -1,14 +1,14 @@
 <?php
 
-namespace Benchmark\Units\Protobuf;
+namespace Benchmark\Metrics\Protobuf;
 
 
 use Benchmark\Converters\AllegroPhpProtobuf\PersonCollection;
 use Benchmark\Converters\AllegroPhpProtobuf\ProtobufConverter;
-use Benchmark\Units\AUnitBenchmark;
+use Benchmark\Metrics\AMetric;
 
 
-class AllegroPhpProtobuf extends AUnitBenchmark
+class AllegroPhpProtobuf extends AMetric
 {
 	/** @var  PersonCollection */
 	private $personCollection;

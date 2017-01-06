@@ -1,12 +1,12 @@
 <?php
 
-namespace Benchmark\Units\Native;
+namespace Benchmark\Metrics\Native;
 
 
 
-use Benchmark\Units\AUnitBenchmark;
+use Benchmark\Metrics\AMetric;
 
-class PhpUnSerializeFunction extends AUnitBenchmark
+class PhpUnSerializeFunction extends AMetric
 {
 
 	public function encode($data)

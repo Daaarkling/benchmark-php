@@ -4,10 +4,9 @@
 namespace Benchmark\Utils;
 
 use Benchmark\Config;
-use Benchmark\Units\IUnitBenchmark;
+use Benchmark\Metrics\IMetric;
 use JsonSchema\Validator as JValidator;
 use Nette\Utils\Json;
-
 
 
 class ConfigValidator
@@ -107,7 +106,7 @@ class ConfigValidator
 	{
 		foreach ($this->config->getConfigNode() as $libs) {
 			foreach ($libs as $lib) {
-				if (!$this->isClassValid($lib->class, IUnitBenchmark::class)) {
+				if (!$this->isClassValid($lib->class, IMetric::class)) {
 					$this->addClassError($lib->class);
 				}
 			}

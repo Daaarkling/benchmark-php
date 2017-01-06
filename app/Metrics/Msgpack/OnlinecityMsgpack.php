@@ -1,13 +1,13 @@
 <?php
 
-namespace Benchmark\Units\Msgpack;
+namespace Benchmark\Metrics\Msgpack;
 
 
-use Benchmark\Units\AUnitBenchmark;
+use Benchmark\Metrics\AMetric;
 
 require_once __DIR__ . '/../../../libs/onlinecity-msgpack-php/msgpack.php';
 
-class OnlinecityMsgpack extends AUnitBenchmark
+class OnlinecityMsgpack extends AMetric
 {
 
 	public function encode($data)

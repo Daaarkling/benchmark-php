@@ -1,14 +1,14 @@
 <?php
 
-namespace Benchmark\Units\Json;
+namespace Benchmark\Metrics\Json;
 
 
 use Benchmark\Converters\JsonConverter;
-use Benchmark\Units\AUnitBenchmark;
+use Benchmark\Metrics\AMetric;
 use Seld\JsonLint\JsonParser;
 
 
-class SeldJsonlint extends AUnitBenchmark
+class SeldJsonlint extends AMetric
 {
 
 	/** @var  JsonParser */

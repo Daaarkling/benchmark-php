@@ -1,14 +1,14 @@
 <?php
 
-namespace Benchmark\Units\Json;
+namespace Benchmark\Metrics\Json;
 
 
-use Benchmark\Units\AUnitBenchmark;
+use Benchmark\Metrics\AMetric;
 use JsonStreamingParser\Listener\InMemoryListener;
 use JsonStreamingParser\Parser;
 
 
-class SalsifyJsonStreamingParser extends AUnitBenchmark
+class SalsifyJsonStreamingParser extends AMetric
 {
 
 	protected function prepareDataForDecode()

@@ -1,12 +1,12 @@
 <?php
 
-namespace Benchmark\Units\Json;
+namespace Benchmark\Metrics\Json;
 
 
-use Benchmark\Units\AUnitBenchmark;
+use Benchmark\Metrics\AMetric;
 
 
-class BukkaPhpJsond extends AUnitBenchmark
+class BukkaPhpJsond extends AMetric
 {
 
 	public function encode($data)

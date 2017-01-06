@@ -5,7 +5,7 @@ namespace Benchmark;
 
 
 use Benchmark\Converters\ArrayConverter;
-use Benchmark\Units\IUnitBenchmark;
+use Benchmark\Metrics\IMetric;
 use Benchmark\Utils\ClassHelper;
 
 abstract class Benchmark
@@ -36,7 +36,7 @@ abstract class Benchmark
 			foreach ($libs as $lib){
 
 				$className = $lib->class;
-				if (!($class = ClassHelper::instantiateClass($className, IUnitBenchmark::class))) {
+				if (!($class = ClassHelper::instantiateClass($className, IMetric::class))) {
 					continue;
 				}
 

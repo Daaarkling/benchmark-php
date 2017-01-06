@@ -1,11 +1,11 @@
 <?php
 
-namespace Benchmark\Units\Msgpack;
+namespace Benchmark\Metrics\Msgpack;
 
 
-use Benchmark\Units\AUnitBenchmark;
+use Benchmark\Metrics\AMetric;
 
-class MsgpackOfficial extends AUnitBenchmark
+class MsgpackOfficial extends AMetric
 {
 
 	public function encode($data)

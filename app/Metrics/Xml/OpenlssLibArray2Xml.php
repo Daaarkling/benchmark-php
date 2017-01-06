@@ -1,14 +1,14 @@
 <?php
 
-namespace Benchmark\Units\Xml;
+namespace Benchmark\Metrics\Xml;
 
 
-use Benchmark\Units\AUnitBenchmark;
+use Benchmark\Metrics\AMetric;
 use LSS\Array2XML;
 use LSS\XML2Array;
 
 
-class OpenlssLibArray2Xml extends AUnitBenchmark
+class OpenlssLibArray2Xml extends AMetric
 {
 
 	public function encode($data)

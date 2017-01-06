@@ -1,14 +1,14 @@
 <?php
 
-namespace Benchmark\Units\Json;
+namespace Benchmark\Metrics\Json;
 
 
-use Benchmark\Units\AUnitBenchmark;
+use Benchmark\Metrics\AMetric;
 use Webmozart\Json\JsonDecoder;
 use Webmozart\Json\JsonEncoder;
 
 
-class WebmozartJson extends AUnitBenchmark
+class WebmozartJson extends AMetric
 {
 
 	/** @var JsonDecoder */

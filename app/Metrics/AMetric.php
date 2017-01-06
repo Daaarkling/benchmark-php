@@ -1,12 +1,12 @@
 <?php
 
-namespace Benchmark\Units;
+namespace Benchmark\Metrics;
 
 
 use Benchmark\Config;
 use InvalidArgumentException;
 
-abstract class AUnitBenchmark implements IUnitBenchmark
+abstract class AMetric implements IMetric
 {
 
 	/** @var  mixed */
