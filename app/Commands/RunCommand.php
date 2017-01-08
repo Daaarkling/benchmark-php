@@ -11,7 +11,6 @@ use Benchmark\Config;
 use Benchmark\Utils\ConfigValidator;
 use Nette\Utils\Json;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -40,7 +39,8 @@ class RunCommand extends Command
 			->addOption('data', 'd', InputOption::VALUE_REQUIRED, 'Set test data.')
 			->addOption('repetitions', 'r', InputOption::VALUE_REQUIRED, 'Set number of repetitions')
 			->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'Set output. You can choose from several choices: ' . implode(', ', self::OUTPUTS) . '.', 'console')
-			->addOption('mode', 'm', InputOption::VALUE_REQUIRED, 'Set method. You can choose from two choices: ' . implode(', ', self::OUTPUTS) . '.', Config::MODE_INNER);
+			->addOption('mode', 'm', InputOption::VALUE_REQUIRED, 'Set method. You can choose from two choices: ' . implode(', ', self::OUTPUTS) . '.', Config::MODE_INNER)
+			->addOption('out_dir', 'od', InputOption::VALUE_REQUIRED, 'Output directory.');
 	}
 
 
@@ -80,6 +80,11 @@ class RunCommand extends Command
 			return 1;
 		}
 
+		$outputDir = __DIR__ . '/../../output';
+		var_dump($outputDir);
+		if (($outputOption == self::OUTPUT_CSV || $outputOption == self::OUTPUT_FILE) && $input->getOption('out_dir') !== NULL) {
+			$outputDir = $input->getOption('out_dir');
+		}
 
 		$config = new Config($configNode, $testData, $repetitions, $mode);
 
@@ -94,13 +99,13 @@ class RunCommand extends Command
 
 			if ($outputOption === self::OUTPUT_FILE) {
 				$bufferedOutput = new BufferedOutput();
-				$benchmark = new BenchmarkFileOutput($config, $input, $bufferedOutput);
+				$benchmark = new BenchmarkFileOutput($config, $input, $bufferedOutput, $outputDir);
 			}
 			elseif ($outputOption === self::OUTPUT_DUMP) {
 				$benchmark = new BenchmarkDumpOutput($config);
 			}
 			elseif ($outputOption === self::OUTPUT_CSV) {
-				$benchmark = new BenchmarkCsvOutput($config);
+				$benchmark = new BenchmarkCsvOutput($config, $outputDir);
 			}
 			else {
 				$benchmark = new BenchmarkConsoleOutput($config, $input, $output);

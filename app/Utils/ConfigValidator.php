@@ -92,7 +92,7 @@ class ConfigValidator
 		if (!in_array($mode, Config::MODES)){
 			$this->errors['mode'][] = [
 				'property' => 'mode',
-				'message' => 'Method must be one of these options: ' . implode(', ', Config::MODES)
+				'message' => 'Mode must be one of these options: ' . implode(', ', Config::MODES)
 			];
 		}
 	}

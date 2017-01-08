@@ -17,6 +17,15 @@ class BenchmarkCsvOutput extends Benchmark
 	/** @var string */
 	public static $timeFormat = 'Y-m-d-H-i-s';
 
+	/** @var string */
+	private $outputDir;
+
+
+	public function __construct(Config $config, $outputDir)
+	{
+		parent::__construct($config);
+		$this->outputDir = $outputDir;
+	}
 
 
 	protected function handleResult($result)
@@ -56,7 +65,7 @@ class BenchmarkCsvOutput extends Benchmark
 
 			// create csv
 			$time = (new DateTime('now', new DateTimeZone('Europe/Prague')))->format(self::$timeFormat);
-			$fileName = __DIR__ . '/../output/' . self::$fileName . '-' . Strings::webalize($typeName) . '-' . $time . '.csv';
+			$fileName = $this->outputDir . '/' . self::$fileName . '-' . Strings::webalize($typeName) . '-' . $time . '.csv';
 
 			$csv = Writer::createFromPath($fileName, 'w');
 			$csv->setDelimiter(';');

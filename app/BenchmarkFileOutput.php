@@ -18,14 +18,17 @@ class BenchmarkFileOutput extends BenchmarkConsoleOutput
 	/** @var string */
 	public static $timeFormat = 'Y-m-d-H-i-s';
 
-
 	/** @var BufferedOutput */
 	protected $output;
 
+	/** @var string */
+	private $outputDir;
 
-	public function __construct(Config $config, InputInterface $input, BufferedOutput $output)
+
+	public function __construct(Config $config, InputInterface $input, BufferedOutput $output, $outputDir)
 	{
 		parent::__construct($config, $input, $output);
+		$this->outputDir = $outputDir;
 	}
 
 
@@ -34,7 +37,7 @@ class BenchmarkFileOutput extends BenchmarkConsoleOutput
 		parent::handleResult($result);
 
 		$time = (new DateTime('now', new DateTimeZone('Europe/Prague')))->format(self::$timeFormat);
-		$name = __DIR__ . '/../output/' . self::$fileName . '-' . $time . '.txt';
+		$name = $this->outputDir . '/' . self::$fileName . '-' . $time . '.txt';
 
 		FileSystem::write($name, $this->output->fetch());
 	}
