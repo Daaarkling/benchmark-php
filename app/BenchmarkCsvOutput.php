@@ -5,7 +5,6 @@ namespace Benchmark;
 use DateTime;
 use DateTimeZone;
 use League\Csv\Writer;
-use Nette\Utils\Strings;
 
 
 class BenchmarkCsvOutput extends Benchmark
@@ -30,47 +29,60 @@ class BenchmarkCsvOutput extends Benchmark
 
 	protected function handleResult($result)
 	{
-		foreach ($result as $typeName => $type) {
+		$headersEncode = [];
+		$headersDecode = [];
+		$rowsEncode = [];
+		$rowsDecode = [];
+		$sizes = [];
 
-			$headersTable = [];
-			$headers = [];
-			$rows = [];
-
-			// headers
-			foreach ($type as $libName => $lib) {
-				$headersTable[] = $lib['format'] . ' - ' . $libName;
-				$headers[] = $libName;
-			}
-
-
-			// time
-			for ($j = 0; $j < count($type[$headers[0]]['time']); $j++) {
-				$row = [];
-				foreach ($headers as $libName) {
-					$row[] = $type[$libName]['time'][$j];
+		$count = $this->config->getRepetitions();
+		for ($i = 0; $i < $count; $i++) {
+			foreach ($result as $typeName => $libs) {
+				foreach ($libs as $metricResult) {
+					if ($i === 0) {
+						if ($metricResult->hasEncode()) {
+							$headersEncode[] = $typeName . " - " . $metricResult->getName();
+							$meanEncode[] = $metricResult->getMeanEncode();
+							$sizes[] = $metricResult->getSize();
+						}
+						if ($metricResult->hasDecode()) {
+							$headersDecode[] = $typeName . " - " . $metricResult->getName();
+							$meanDecode[] = $metricResult->getMeanDecode();
+						}
+					}
+					$sizeEncode = count($metricResult->getTimeEncode());
+					if ($sizeEncode > 0 && $i < $sizeEncode) {
+						$rowsEncode[$i][] = $metricResult->getTimeEncode()[$i];
+					}
+					$sizeDecode = count($metricResult->getTimeDecode());
+					if ($sizeDecode > 0 && $i < $sizeDecode) {
+						$rowsDecode[$i][] = $metricResult->getTimeDecode()[$i];
+					}
 				}
-				$rows[] = $row;
 			}
-
-
-			// sizes
-			if (key_exists('size', $type[$headers[0]])) {
-				$row = [];
-				foreach ($headers as $libName) {
-					$row[] = $type[$libName]['size'];
-				}
-				$rows[] = $row;
-			}
-
-
-			// create csv
-			$time = (new DateTime('now', new DateTimeZone('Europe/Prague')))->format(self::$timeFormat);
-			$fileName = $this->outputDir . '/' . self::$fileName . '-' . Strings::webalize($typeName) . '-' . $time . '.csv';
-
-			$csv = Writer::createFromPath($fileName, 'w');
-			$csv->setDelimiter(';');
-			$csv->insertOne($headersTable);
-			$csv->insertAll($rows);
 		}
+
+		$time = (new DateTime('now', new DateTimeZone('Europe/Prague')))->format(self::$timeFormat);
+
+		$fileNameEncode = $this->outputDir . '/' . self::$fileName . '-encode-' . $time . '.csv';
+		$rowsEncode[] = $sizes;
+		$this->writeCsv($fileNameEncode, $headersEncode, $rowsEncode);
+
+		$fileNameDecode = $this->outputDir . '/' . self::$fileName . '-decode-' . $time . '.csv';
+		$this->writeCsv($fileNameDecode, $headersDecode, $rowsDecode);
+	}
+
+
+	/**
+	 * @param string $name
+	 * @param string[] $headers
+	 * @param array $rows
+	 */
+	protected function writeCsv($name, $headers, $rows) {
+
+		$csv = Writer::createFromPath($name, 'w');
+		$csv->setDelimiter(';');
+		$csv->insertOne($headers);
+		$csv->insertAll($rows);
 	}
 }

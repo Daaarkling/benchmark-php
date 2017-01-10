@@ -82,7 +82,6 @@ class BenchmarkConsoleOutput extends Benchmark
 			foreach ($result as $typeName => $libs) {
 				foreach ($libs as $metricResult) {
 					if ($i === 0) {
-						// headers
 						if ($metricResult->hasEncode()) {
 							$headersEncode[] = $typeName . " - " . $metricResult->getName();
 							$meanEncode[] = Formatters::seconds($metricResult->getMeanEncode());
@@ -93,7 +92,6 @@ class BenchmarkConsoleOutput extends Benchmark
 							$meanDecode[] = Formatters::seconds($metricResult->getMeanDecode());
 						}
 					}
-					// times
 					$sizeEncode = count($metricResult->getTimeEncode());
 					if ($sizeEncode > 0 && $i < $sizeEncode) {
 						$rowsEncode[$i][] = Formatters::seconds($metricResult->getTimeEncode()[$i]);
