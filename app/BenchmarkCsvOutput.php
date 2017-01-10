@@ -42,12 +42,10 @@ class BenchmarkCsvOutput extends Benchmark
 					if ($i === 0) {
 						if ($metricResult->hasEncode()) {
 							$headersEncode[] = $typeName . " - " . $metricResult->getName();
-							$meanEncode[] = $metricResult->getMeanEncode();
 							$sizes[] = $metricResult->getSize();
 						}
 						if ($metricResult->hasDecode()) {
 							$headersDecode[] = $typeName . " - " . $metricResult->getName();
-							$meanDecode[] = $metricResult->getMeanDecode();
 						}
 					}
 					$sizeEncode = count($metricResult->getTimeEncode());
