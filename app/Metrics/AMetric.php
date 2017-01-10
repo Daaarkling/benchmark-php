@@ -4,7 +4,6 @@ namespace Benchmark\Metrics;
 
 
 use Benchmark\Config;
-use InvalidArgumentException;
 
 abstract class AMetric implements IMetric
 {
@@ -25,10 +24,6 @@ abstract class AMetric implements IMetric
 	 */
 	public function run($data, $dataFile, $repetitions = 10, $mode = Config::MODE_OUTER)
 	{
-		if ($repetitions < 1) {
-			throw new InvalidArgumentException('Number of repetitions must be greater then 0.');
-		}
-
 		$this->data = $data;
 		$this->dataFile = $dataFile;
 
@@ -48,6 +43,9 @@ abstract class AMetric implements IMetric
 		$this->prepareBenchmark();
 		$data = $this->prepareDataForEncode();
 		$output = NULL;
+
+		// Do it once to warm up.
+		$this->encode($data);
 
 		for ($i = 1; $i <= $repetitions; $i++) {
 			$start = microtime(TRUE);
@@ -71,6 +69,9 @@ abstract class AMetric implements IMetric
 				return $result;
 			}
 		}
+
+		// Do it once to warm up.
+		$this->decode($encodedData);
 
 		$output = NULL;
 		for ($i = 1; $i <= $repetitions; $i++) {
@@ -98,6 +99,9 @@ abstract class AMetric implements IMetric
 		$data = $this->prepareDataForEncode();
 		$output = NULL;
 
+		// Do it once to warm up.
+		$this->encode($data);
+
 		$encoded = FALSE;
 		$start = microtime(TRUE);
 		for ($i = 1; $i <= $repetitions; $i++) {
@@ -121,6 +125,10 @@ abstract class AMetric implements IMetric
 				return $result;
 			}
 		}
+
+
+		// Do it once to warm up.
+		$this->decode($encodedData);
 
 		$output = NULL;
 		$start = microtime(TRUE);
