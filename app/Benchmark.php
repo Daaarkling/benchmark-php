@@ -41,22 +41,18 @@ abstract class Benchmark
 				}
 
 				// run unit benchmark
-				$unitResult = $class->run($data, $dataFile, $repetitions, $mode);
+				$metricResult = $class->run($data, $dataFile, $repetitions, $mode);
 
-				// rearrange result
-				$libName = property_exists($lib, 'version') ? $lib->name . ' ' . $lib->version : $lib->name;
-				foreach ($unitResult as $type => $value) {
-					foreach ($value['time'] as $time) {
-						$result[$type][$libName]['time'][] = $time;
-					}
-					if (key_exists('size', $value)) {
-						$result[$type][$libName]['size'] = $value['size'];
-					}
-					$result[$type][$libName]['format'] = $formatName;
+				if($metricResult === NULL){
+					continue;
 				}
+
+				$name = property_exists($lib, 'version') ? $lib->name . ' ' . $lib->version : $lib->name;
+				$metricResult->setName($name);
+
+				$result[$formatName][] = $metricResult;
 			}
 		}
-
 		$this->handleResult($result);
 	}
 
@@ -64,7 +60,9 @@ abstract class Benchmark
 	protected abstract function handleResult($result);
 
 
-
+	/**
+	 * @return mixed
+	 */
 	protected function prepareData()
 	{
 		$arrayConverter = new ArrayConverter();

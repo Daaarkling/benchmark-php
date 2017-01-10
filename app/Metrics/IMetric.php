@@ -14,7 +14,7 @@ interface IMetric
 	 * @param string $dataFile
 	 * @param int $repetitions
 	 * @param string $mode
-	 * @return array
+	 * @return MetricResult
 	 */
 	public function run($data, $dataFile, $repetitions = Config::REPETITIONS_DEFAULT, $mode = Config::MODE_INNER);
 

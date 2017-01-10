@@ -20,7 +20,7 @@ abstract class AMetric implements IMetric
 	 * @param string $dataFile
 	 * @param int $repetitions
 	 * @param string $mode
-	 * @return array
+	 * @return MetricResult
 	 */
 	public function run($data, $dataFile, $repetitions = 10, $mode = Config::MODE_OUTER)
 	{
@@ -35,11 +35,11 @@ abstract class AMetric implements IMetric
 
 	/**
 	 * @param int $repetitions
-	 * @return array
+	 * @return MetricResult
 	 */
 	private function runInner($repetitions = 10)
 	{
-		$result = [];
+		$result = new MetricResult();
 		$this->prepareBenchmark();
 		$data = $this->prepareDataForEncode();
 		$output = NULL;
@@ -55,14 +55,14 @@ abstract class AMetric implements IMetric
 			if ($output === FALSE) {
 				break;
 			}
-			$result['encode']['time'][] = is_array($output) ? $output['time'] : $time;
+			$result->addTimeEncode(is_array($output) ? $output['time'] : $time);
 		}
 
 		// size of string is always same (at least it should be), there is no need to repeat the process
 		if (is_string($output) || is_array($output)) {
 			$encodedData = is_array($output) ? $output['string'] : $output;
 			$size = strlen($encodedData);
-			$result['encode']['size'] = $size;
+			$result->setSize($size);
 		} else {
 			$encodedData = $this->prepareDataForDecode();
 			if (!is_string($encodedData)) {
@@ -82,7 +82,7 @@ abstract class AMetric implements IMetric
 			if ($output === FALSE) {
 				break;
 			}
-			$result['decode']['time'][] = is_float($output) ? $output : $time;
+			$result->addTimeDecode(is_float($output) ? $output : $time);
 		}
 
 		return $result;
@@ -90,11 +90,11 @@ abstract class AMetric implements IMetric
 
 	/**
 	 * @param int $repetitions
-	 * @return array
+	 * @return MetricResult
 	 */
 	private function runOuter($repetitions = 10)
 	{
-		$result = [];
+		$result = new MetricResult();
 		$this->prepareBenchmark();
 		$data = $this->prepareDataForEncode();
 		$output = NULL;
@@ -110,7 +110,7 @@ abstract class AMetric implements IMetric
 		$time = microtime(TRUE) - $start;
 
 		if ($output !== FALSE && !is_array($output)) {
-			$result['encode']['time'][] = $time;
+			$result->addTimeEncode($time);
 			$encoded = TRUE;
 		}
 
@@ -118,7 +118,7 @@ abstract class AMetric implements IMetric
 		if ($encoded && (is_string($output) || is_array($output))) {
 			$encodedData = is_array($output) ? $output['string'] : $output;
 			$size = strlen($encodedData);
-			$result['encode']['size'] = $size;
+			$result->setSize($size);
 		} else {
 			$encodedData = $this->prepareDataForDecode();
 			if (!is_string($encodedData)) {
@@ -137,7 +137,7 @@ abstract class AMetric implements IMetric
 		}
 		$time = microtime(TRUE) - $start;
 		if ($output !== FALSE && !is_float($output)) {
-			$result['decode']['time'][] = $time;
+			$result->addTimeDecode($time);
 		}
 
 		return $result;

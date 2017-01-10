@@ -9,14 +9,12 @@ use DateTimeZone;
 use Nette\Utils\FileSystem;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class BenchmarkFileOutput extends BenchmarkConsoleOutput
 {
 	/** @var string */
 	public static $fileName = 'php-output';
-
-	/** @var string */
-	public static $timeFormat = 'Y-m-d-H-i-s';
 
 	/** @var BufferedOutput */
 	protected $output;
@@ -31,14 +29,17 @@ class BenchmarkFileOutput extends BenchmarkConsoleOutput
 		$this->outputDir = $outputDir;
 	}
 
-
-	protected function handleResult($result)
+	protected function printTable($caption, $headers, $rows)
 	{
-		parent::handleResult($result);
+		$io = new SymfonyStyle($this->input, $this->output);
+		$io->title($caption);
+		$io->table($headers, $rows);
 
 		$time = (new DateTime('now', new DateTimeZone('Europe/Prague')))->format(self::$timeFormat);
-		$name = $this->outputDir . '/' . self::$fileName . '-' . $time . '.txt';
+		$name = __DIR__ . '/../output/' . self::$fileName . '-' . $time . '.txt';
 
 		FileSystem::write($name, $this->output->fetch());
 	}
+
+
 }
