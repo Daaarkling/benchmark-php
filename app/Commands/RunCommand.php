@@ -84,7 +84,6 @@ class RunCommand extends Command
 		}
 
 		$outputDir = __DIR__ . '/../../output';
-		var_dump($outputDir);
 		if (($outputOption == self::OUTPUT_CSV || $outputOption == self::OUTPUT_FILE) && $input->getOption('out_dir') !== NULL) {
 			$outputDir = $input->getOption('out_dir');
 		}

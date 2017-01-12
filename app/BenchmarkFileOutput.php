@@ -36,7 +36,7 @@ class BenchmarkFileOutput extends BenchmarkConsoleOutput
 		$io->table($headers, $rows);
 
 		$time = (new DateTime('now', new DateTimeZone('Europe/Prague')))->format(self::$timeFormat);
-		$name = __DIR__ . '/../output/' . self::$fileName . '-' . $time . '.txt';
+		$name = $this->outputDir . '/' . self::$fileName . '-' . $time . '.txt';
 
 		FileSystem::write($name, $this->output->fetch());
 	}
