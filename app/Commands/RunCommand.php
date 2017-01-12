@@ -68,7 +68,10 @@ class RunCommand extends Command
 		}
 
 		// repetitions
-		$repetitions = $input->getOption('repetitions');
+		$repetitions = 10;
+		if ($input->getOption('repetitions') !== NULL) {
+			$repetitions = $input->getOption('repetitions');
+		}
 
 		// mode
 		$mode = $input->getOption('mode');
