@@ -2,7 +2,7 @@
 	"name": "testData",
 	"type": "record",
 	"fields": [{
-		"name": "data",
+		"name": "persons",
 		"type": {
 			"type": "array",
 			"items": {

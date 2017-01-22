@@ -7,7 +7,6 @@ namespace Benchmark\Converters\GoogleProtobuf;
 use Benchmark\Converters\IDataConverter;
 use Google\Protobuf\Internal\GPBType;
 use Google\Protobuf\Internal\RepeatedField;
-use Nette\Utils\Json;
 
 class ProtobufConverter implements IDataConverter
 {
@@ -18,7 +17,7 @@ class ProtobufConverter implements IDataConverter
 		$personCollection = new PersonCollection();
 		$persons = new RepeatedField(GPBType::MESSAGE, Person::class);
 
-		foreach ($arrayData['data'] as $personData) {
+		foreach ($arrayData['persons'] as $personData) {
 
 			$person = new Person();
 			$person->setId($personData['id']);

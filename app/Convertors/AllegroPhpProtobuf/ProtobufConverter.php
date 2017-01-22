@@ -5,7 +5,6 @@ namespace Benchmark\Converters\AllegroPhpProtobuf;
 
 
 use Benchmark\Converters\IDataConverter;
-use Nette\Utils\Json;
 
 class ProtobufConverter implements IDataConverter
 {
@@ -15,7 +14,7 @@ class ProtobufConverter implements IDataConverter
 	{
 		$personCollection = new PersonCollection();
 		
-		foreach ($arrayData['data'] as $personData) {
+		foreach ($arrayData['persons'] as $personData) {
 
 			$person = new Person();
 			$person->setId($personData['id']);
@@ -39,7 +38,7 @@ class ProtobufConverter implements IDataConverter
 			$person->setLongitude($personData['longitude']);
 
 			foreach ($personData['tags'] as $tag) {
-				$person->appendTags($tags);
+				$person->appendTags($tag);
 			};
 
 
